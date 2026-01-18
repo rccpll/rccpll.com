@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import * as esbuild from "esbuild";
+import { minify as minifyHtml } from "html-minifier-terser";
 
 const SRC = "src";
 const OUT = "dist";
@@ -133,6 +134,16 @@ for (const file of after) {
     // Replace both "foo.css" and "/foo.css" occurrences
     content = content.split(oldRel).join(newRel);
     content = content.split("/" + oldRel).join("/" + newRel);
+  }
+
+  // Minify HTML files
+  if (file.endsWith(".html")) {
+    content = await minifyHtml(content, {
+      collapseWhitespace: true,
+      removeComments: true,
+      minifyCSS: true,
+      minifyJS: true,
+    });
   }
 
   await fs.writeFile(file, content);
