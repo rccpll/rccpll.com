@@ -1,0 +1,179 @@
+@charset "UTF-8";
+
+:root {
+	--color-text:#eee;
+	--color-bg:#222;
+	--color-gray:#888;
+	--color-gray-dark:#333;
+	--color-gray-light:#444;
+	--color-bg-section:#333;
+}
+
+html, #work section{background:#222;color:#eee;border:none;}
+#work p, #btn-available, header > nav a, nav a.rccpll svg, nav a.rccpll  {color:#bbb;opacity:1;}
+header > nav a:hover, #btn-available:hover {color:#eee;}
+#btn-available:before {box-shadow: 0 0 0 1px #444;}
+#btn-available .arrow-icon path {stroke:#bbb;}
+#btn-available:hover .arrow-icon path, .rccpll .arrow-icon path, .rccpll:hover .arrow-icon path {stroke:#eee;}
+nav a.rccpll:before {box-shadow: 0 0 0 1px #616161;}
+
+
+body > main > section {background:#333;border:1px solid #444;}
+
+#stateBtns button:before{box-shadow:inset 0 0 0 0.5px #555;background:#242424;}
+#stateBtns button:hover:before {background:#9c9c9c;box-shadow:inset 0 0 0 0.5px #333;}
+#stateBtns #clrBtn span:last-child {background:#242424;}
+#stateBtns #clrBtn:hover span {border-color: #fff;background:#fff;}
+#stateBtns #clrBtn:hover span:last-child {background: #242424;border-color: #242424;}
+#stateBtns #clrBtn.clr span:last-child {background:#FF0000;border-color:#FF0000;}
+#stateBtns #clrBtn.clr span {background:#005eff;border-color:#005eff;opacity:0.8;}
+#stateBtns #darkBtn span:before {top:-0.2rem;left:-0.2rem;width:0.5rem;height:0.5rem;background: #242424;}
+#stateBtns #darkBtn:hover span:before {background: #9c9c9c;}
+#sunDots svg:first-child {transform: translate(0, 0);}
+#sunDots svg:nth-child(2) {transform: translate(0, 0);}
+#sunDots svg:nth-child(3) {transform: translate(0, 0);}
+#sunDots svg:nth-child(4) {transform: translate(0, 0);}
+#sunDots svg:nth-child(5) {transform: translate(0, 0);}
+#sunDots svg:nth-child(6) {transform: translate(0, 0);}
+#sunDots svg:nth-child(7) {transform: translate(0, 0);}
+#sunDots svg:nth-child(8) {transform: translate(0, 0);}
+
+
+#theeye:hover {border-color:#121212;}
+#theeye svg path {fill: #888;}
+#theeye .pupil {border-color:#888;}
+
+#meaz svg {opacity:0.8;}
+#meaz:hover svg {opacity:1;}
+#meaz svg .mea-w{fill:#222}
+#meaz svg .mea-dg{fill:#888}
+#meaz svg .mea-lg{fill:#444}
+
+#famob .app {background:transparent;}
+#famob nav .dynaland {background:#222;}
+#famob #financing-limit-meter {background:transparent;box-shadow: 0 0 0 1px #555;}
+#famob .famob-card {background:#333;}
+#famob .famob-card header mark {background:#555;}
+#famob .famob-card .famob-invoice {border-bottom: 1px solid #444;}
+.clr #famob .famob-card .famob-invoice {border-bottom: 1px solid #E1E5EA;}
+.clr #famob .famob-card .famob-invoice:last-child, #famob .famob-card .famob-invoice:last-child {border-bottom: none;}
+.facards button, .fabuttons button {background: linear-gradient(180deg, rgb(248 248 248 / 57%) 0%, rgb(0 0 0 / 0%) 161.29%), #030a13;}
+.clr .facards button, .clr .fabuttons button {background:linear-gradient(180deg, rgba(12, 198, 255, 0.57) 0%, rgba(2, 107, 255, 0) 161.29%), #026BFF;}
+#famob .fasuccess {background-color: #111;}
+#famob .fasuccess.fashow button {background:#333;}
+#famob .famob-card.faprocessing .famob-invoice mark {background:#525252;}
+
+#revire:before {background:#222;}
+#revire svg:last-child, .clr #revire svg:last-child {fill:#fff;}
+#revire svg:last-child path:first-child, .clr #revire svg:last-child path:first-child{fill:#FEFF9C;}
+
+#colors div {mix-blend-mode:difference;}
+#colors:hover div, .clr #colors div {mix-blend-mode:unset;}
+
+#teca:hover {background:#fffbfb;}
+#teca > div {mix-blend-mode: normal;}
+#teca .tecah1, #teca .tecanav li {color: #353535;}
+#teca .tecstart .tecaheader:before {background: linear-gradient(180deg, rgb(0 0 0 / 60%) 0%, rgba(76, 217, 100, 0.00) 100%);}
+.clr #teca .tecaheader:before {
+    background: linear-gradient(180deg, rgba(76, 217, 100, 0.60) 0%, rgba(76, 217, 100, 0.00) 100%);}
+
+#cff > div > .cffCircles {background-color:#555;}
+#cff > div  > .cffCircles > .cffCircles {background-color:#666;}
+#cff > div  > .cffCircles > .cffCircles > .cffCircles {background-color:#777;}
+#cff > div  > .cffCircles > .cffCircles > .cffCircles > .cffCircles {background-color:#888;}
+#cff:hover svg .cff-f-one, #cff:hover svg .cff-f-two, .clr #cff svg .cff-f-one, .clr #cff svg .cff-f-two {stroke:#eee;}
+
+#vlak {background-color:#121212;transition:0.5s all ease 0.3s;}
+#vlak:hover{border-color:#121212;transition:0.5s all ease;}
+#vlak > div {filter:invert(0.85);transition: 0.5s filter ease 0.15s, 0.5s height ease 0.3s, 0.5s width ease 0.3s, 0.5s transform ease 0.3s;}
+#vlak:hover > div {filter:invert(0);transition: 0.5s filter ease 0.2s, height ease 0.5s, width ease 0.5s, transform ease 0.5s;}
+
+#f-desys:before, #f-desys:after {background:#333;box-shadow: 0px 0px 10px 20px #333;transition:0.3s all ease;}
+#f-desys:hover:before, #f-desys:hover:after, .clr #f-desys:before, .clr #f-desys:after {background:#222;box-shadow: 0px 0px 10px 20px #222;}
+#f-desys .destab {background:#333;transition:0.3s all ease;}
+#f-desys:hover .destab, .clr #f-desys .destab {background:#222;}
+#f-desys .typography ul.titles li {box-shadow: 1px -6px 0px 11px #333, 0px 7px 6px 0px #333;background:#333;}
+#f-desys:hover .typography ul.titles li, .clr #f-desys .typography ul.titles li {box-shadow: 1px -6px 0px 11px #222, 0px 7px 6px 0px #222;background:#222;}
+#f-desys .tabs-container {background: rgb(69 69 69 / 70%);}
+#f-desys label:hover {background: #333;}
+#f-desys .typography ul li {border-color:#444;}
+#f-desys .typography ul li span {color:#c1baba;}
+#f-desys:hover .typography ul li .ty-nam, .clr #f-desys .typography ul li .ty-nam, #f-desys:hover .typography ul li .ty-nam.flab, .clr #f-desys .typography ul li .ty-nam.flab {color:inherit;}
+#f-desys .buttons button.primary {background: linear-gradient(180deg, rgb(0 125 163 / 70%) 0%, rgb(0 64 153 / 0%) 150%), #026BFF;box-shadow: 0px 1px 1px rgba(0, 72, 172, 0.2), inset 0px -0.4px 0.8px rgba(255, 255, 255, 0.32), inset 0px -1px 0px #005DDE;text-shadow: 0px 0.3px 0.5px rgba(0, 0, 0, 0.5), 0px 0px 3px rgba(0, 0, 0, 0.25);outline:0 solid #0048AC;}
+#f-desys .buttons button.primary:hover, #f-desys .buttons button.primary.hover {background: linear-gradient(180deg, rgb(0 167 179 / 70%) 0%, rgb(0 85 204 / 0%) 150%), #026BFF;box-shadow:  inset 0px -1px 0px rgba(0, 93, 222, 0.6), 0px 2px 1px rgba(0, 72, 172, 0.05), 0px -2px 1px rgba(0, 72, 172, 0.05), inset 0px -0.4px 0.8px rgba(255, 255, 255, 0.32);outline:4px solid #0048AC;color:#F5F6FA;}
+#f-desys .buttons button.primary:active, #f-desys .buttons button.primary.active {background: linear-gradient(180deg, rgba(2, 107, 255, 0) 0%, rgb(0 164 214 / 66%) 80%), #026BFF;box-shadow: inset 0px 3px 2px #005DDE, inset 0px 3px 5px rgba(0, 0, 0, 0.1), inset 0px -1px 2px rgba(0, 93, 222, 0.3);outline:4px solid #0048AC;}
+#f-desys .buttons button.secondary {  border: 1px solid #026BFF;color:#F5F6FA;background:transparent;outline:0 solid #0048AC;}
+#f-desys .buttons button.secondary:hover, #f-desys .buttons button.secondary.hover {outline:4px solid #0048AC;background:#0048AC;}
+#f-desys .buttons button.secondary:active, #f-desys .buttons button.secondary.active {outline:4px solid #0048AC;background:#0048AC;color:#AEB9C7;}
+#f-desys .buttons button.tertiary {  border: 1px solid #E1E5EA;color:#E1E5EA;background:transparent; outline:0 solid #5C5C70;}
+#f-desys .buttons button.tertiary:hover, #f-desys button.tertiary.hover {  outline:4px solid #5C5C70;background:#353540;}
+#f-desys .buttons button.tertiary:active, #f-desys button.tertiary.active {outline:4px solid #5C5C70;background:#353540;color:#AEB9C7;}
+#f-desys button.valid {outline: 0px solid #265a3f;background: linear-gradient(180deg, rgb(6 113 57) 0%, rgb(25 102 61 / 0%) 150%), #006631;box-shadow: 0px 1px 1px rgb(0 0 0 / 20%), inset 0px -0.4px 0.8px rgba(255, 255, 255, 0.32), inset 0px -1px 0px #0a0b0a;}
+#f-desys button.valid:hover, #f-desys button.valid.hover {outline: 4px solid #265a3f; background: linear-gradient(180deg, rgb(14 146 76) 0%, rgba(2, 107, 255, 0) 150%), #006631;box-shadow: inset 0px -1px 0px hsl(149deg 13.46% 13.45%), 0px 2px 1px rgba(0, 72, 172, 0.05), 0px -2px 1px rgba(0, 72, 172, 0.05), inset 0px -0.4px 0.8px rgba(255, 255, 255, 0.32);}
+#f-desys button.valid:active, #f-desys button.valid.active {outline: 4px solid #265a3f;background:linear-gradient(180deg, rgba(101 236 164 / 0.1) 50%, rgb(0 149 69) 100%), #2da667;box-shadow:inset 0px 3px 2px #009547, inset 0px 3px 5px rgba(0, 0, 0, 0.1), inset 0px -1px 2px rgba(101 236 164 / 0.3);}
+#f-desys button.destructive {background: linear-gradient(180deg, rgb(183 49 11) 0%, rgba(169, 40, 3, 0) 150%), #791c02;box-shadow: 0px 1px 1px rgb(181 53 16 / 20%), inset 0px -0.4px 0.8px rgb(21 2 2 / 32%), inset 0px -1px 0px #481000;outline:0 solid #7d270d;}
+#f-desys button.destructive:hover, #f-desys button.destructive.hover {background:linear-gradient(180deg, rgb(197 66 25) 0%, rgba(169, 40, 3, 0) 150%), #A92803;box-shadow:inset 0px -1px 0px rgb(47 11 1), 0px 2px 1px rgba(0, 72, 172, 0.05), 0px -2px 1px rgba(0, 72, 172, 0.05), inset 0px -0.4px 0.8px rgba(255, 255, 255, 0.32);outline:4px solid #7d270d;}
+#f-desys button.destructive:active, #f-desys button.destructive.active {background: linear-gradient(180deg, rgba(169, 40, 3, 0.1) 50%, rgb(203 49 1) 100%), #d53709;box-shadow: inset 0px 3px 2px #af381a, inset 0px 3px 5px rgba(0, 0, 0, 0.1), inset 0px -1px 2px rgb(236 101 101 / 30%);outline:4px solid #7d270d;}
+
+#f-desys .buttons button:disabled, #f-desys .buttons button:disabled:hover, #f-desys .buttons button:disabled:active {background:#353540;box-shadow:none;text-shadow:none;cursor: not-allowed;outline:none;color:#5C5C70;border:none;}
+#f-desys .buttons button:disabled svg path, #f-desys .buttons button:disabled:hover svg path, #f-desys .buttons button:disabled:active svg path {fill:#5C5C70;stroke:#5C5C70;}
+
+.sftopbar {background:#3b3c3e;}
+.sfurlbar {background:#555;}
+.sfurlbar .sfurl p {color: #fff;}
+.sfpage {background-color: #222;transition:0.2s all ease;}
+#facfi aside {background: #191919;}
+#facfi aside nav > svg, .clr #facfi aside nav > svg, .clr #facfi aside nav a.active svg, #facfi aside nav a.active svg {fill:#089fff;}
+#facfi aside nav > svg {fill:#089fff;stroke:#089fff;}
+.clr #facfi nav a.active, .clr #facfi nav a {color:#eee;}
+.clr #facfi aside nav a svg {fill:#888;}
+#facfi aside nav a.active {background: #333;}
+#facfi nav a span {color:#eee;}
+#facfi nav a.pending span {background:#89632a;}
+#facfi nav a.rejected span {background:#6e3630;}
+#facfi nav a.approved span {background:#2b593f;}
+#facfi nav a.paid span {background:#28456c;}
+#facfi .table-content-row:hover .table-action svg path {fill:#eee;}
+#facfi:hover nav a, #facfi:hover table tr th, .clr #facfi nav a, .clr #facfi table tr th, #facfi:hover .famobh1, #facfi:hover table tr td, .clr #facfi .famobh1, .clr #facfi table tr td, #work #facfi nav a, #work #facfi table tr th, #work #facfi .famobh1, #work #facfi table tr td, #facfi .table-issue span, #facfi .table-due span {color: #eee;}
+#facfi:hover .actBtnRow p, .clr #facfi .actBtnRow p, #work #facfi .actBtnRow p {color:#eee;opacity:0.9;}
+#facfi:hover main nav a.active, .clr #facfi main nav a.active, #work #facfi main nav a.active {border-bottom:2px solid #089fff;color:#F5F6FA;}
+#facfi tr:has(input[type="checkbox"]:checked), #facfi:hover tr:has(input[type="checkbox"]:checked), .clr #facfi tr:has(input[type="checkbox"]:checked), #facfi .table-content-row:hover  {background:#444;box-shadow:-4px 0px 0px #444, 4px 0px 0px #444;}
+#facfi .table-content-row, #facfi .table-header-row {border-bottom:1px solid #333;}
+#facfi .table-content-row:hover, #facfi:hover tr:has(input[type="checkbox"]:checked):hover {background:#000;box-shadow: -4px 0px 0px #000, 4px 0px 0px #000;}
+#facfi .table-content-row:hover td {color:#fff;}
+#facfi .table-status span {background-color:#89632a;}
+#facfi .table-content-row:hover .table-status span {color:#eee;}
+#facfi .table-issue span.date-red, #facfi .table-due span.date-red {color:#ff8f6e;}
+#facfi .ckbx {background:#222;border:1px solid #555;box-shadow:0px 2px 2px 0px rgb(3 3 4 / 33%) inset;}
+.fac-filters .filter-selection label, .fac-filters .filter-btn, .fac-filters #fac-search {box-shadow: 0px 0px 0px 1px #555, 0px 1px 2px 0px #111;color:#eee;background:#333;}
+.fac-filters .filter-btn svg {fill:#eee;}
+.fac-filters #fac-search {background:#333;}
+.fac-filters input::placeholder {color:#888;font-weight:500;}
+.fac-filters #fac-search:hover, .fac-filters #fac-search:focus, .fac-filters .filter-btn:hover, .fac-filters .filter-selection label.act-fil, .fac-filters .filter-selection label:hover {box-shadow: 0px 2px 2px 0px rgba(174, 185, 199, 0.33) inset, 0px 0px 0px 1px #089fff, 0px 1px 2px 0px #9e9e9e, 0px 0px 0px 4px #004892;}
+#facfi .ckbx:hover, .ckbx.hover {border-color: #089fff;box-shadow: 0px 2px 2px 0px rgba(174, 185, 199, 0.33) inset, 0px 0px 0px 4px #004892;}
+.fac-filters .filter-selection label.act-fil input[type="search"] {background:#222222;}
+#facfi .actBtnRow .favalid, #f-desys button.valid {outline: 0px solid #265a3f;background: linear-gradient(180deg, rgb(6 113 57) 0%, rgb(25 102 61 / 0%) 150%), #006631;box-shadow: 0px 1px 1px rgb(0 0 0 / 20%), inset 0px -0.4px 0.8px rgba(255, 255, 255, 0.32), inset 0px -1px 0px #0a0b0a;}
+#facfi .actBtnRow .favalid:hover, #f-desys button.valid:hover, #f-desys button.valid.hover {outline: 4px solid #265a3f;background: linear-gradient(180deg, rgb(14 146 76) 0%, rgba(2, 107, 255, 0) 150%), #006631;box-shadow: inset 0px -1px 0px hsl(149deg 13.46% 13.45%), 0px 2px 1px rgba(0, 72, 172, 0.05), 0px -2px 1px rgba(0, 72, 172, 0.05), inset 0px -0.4px 0.8px rgba(255, 255, 255, 0.32);}
+#facfi .actBtnRow .favalid:active, #f-desys button.valid:active, #f-desys button.valid.active {background:linear-gradient(180deg, rgba(101 236 164 / 0.1) 50%, rgb(0 149 69) 100%), #2da667;box-shadow:inset 0px 3px 2px #009547, inset 0px 3px 5px rgba(0, 0, 0, 0.1), inset 0px -1px 2px rgba(101 236 164 / 0.3);}
+#facfi .actBtnRow .fadestr, #f-desys button.destructive {background: linear-gradient(180deg, rgb(183 49 11) 0%, rgba(169, 40, 3, 0) 150%), #791c02;box-shadow: 0px 1px 1px rgb(181 53 16 / 20%), inset 0px -0.4px 0.8px rgb(21 2 2 / 32%), inset 0px -1px 0px #481000;outline:0 solid #7d270d;}
+#facfi .actBtnRow .fadestr:hover, #f-desys button.destructive:hover, #f-desys button.destructive.hover {background:linear-gradient(180deg, rgb(197 66 25) 0%, rgba(169, 40, 3, 0) 150%), #A92803;box-shadow:inset 0px -1px 0px rgb(47 11 1), 0px 2px 1px rgba(0, 72, 172, 0.05), 0px -2px 1px rgba(0, 72, 172, 0.05), inset 0px -0.4px 0.8px rgba(255, 255, 255, 0.32);outline:4px solid #7d270d;}
+#facfi .actBtnRow .fadestr:active, #f-desys button.destructive:active, #f-desys button.destructive:active {background: linear-gradient(180deg, rgba(169, 40, 3, 0.1) 50%, rgb(203 49 1) 100%), #d53709;box-shadow: inset 0px 3px 2px #af381a, inset 0px 3px 5px rgba(0, 0, 0, 0.1), inset 0px -1px 2px rgb(236 101 101 / 30%);}
+.actBtnRow p:before {content:'';display:inline-block;height:0.7rem;margin-left:0.25rem;width:1rem;background-size:contain;background-repeat:no-repeat;background-image: url("data:image/svg+xml,%0A%3Csvg width='62' height='75' viewBox='0 0 62 75' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M41.62 30.88C41.0513 30.3501 40.2991 30.0616 39.5219 30.0753C38.7447 30.089 38.0032 30.4039 37.4535 30.9535C36.9039 31.5032 36.589 32.2447 36.5753 33.0219C36.5616 33.7991 36.8501 34.5513 37.38 35.12L51.26 49H17C14.0826 49 11.2847 47.8411 9.22182 45.7782C7.15892 43.7153 6 40.9174 6 38V3C6 2.20435 5.68393 1.44129 5.12132 0.878679C4.55871 0.31607 3.79565 0 3 0C2.20435 0 1.44129 0.31607 0.878679 0.878679C0.31607 1.44129 0 2.20435 0 3V38C0 42.5087 1.79107 46.8327 4.97919 50.0208C8.1673 53.2089 12.4913 55 17 55H51.26L37.38 68.88C37.0853 69.1546 36.8488 69.4858 36.6849 69.8538C36.5209 70.2218 36.4327 70.6191 36.4256 71.0219C36.4185 71.4247 36.4926 71.8248 36.6435 72.1984C36.7944 72.5719 37.019 72.9113 37.3038 73.1962C37.5887 73.481 37.9281 73.7056 38.3016 73.8565C38.6752 74.0074 39.0753 74.0815 39.4781 74.0744C39.8809 74.0673 40.2782 73.9791 40.6462 73.8151C41.0141 73.6512 41.3454 73.4147 41.62 73.12L60.62 54.12C61.1818 53.5575 61.4974 52.795 61.4974 52C61.4974 51.205 61.1818 50.4425 60.62 49.88L41.62 30.88Z' fill='white'/%3E%3C/svg%3E%0A");}
+
+
+#contact p {background:#444;border:1px solid #555;}
+#contact a {color:#ddd;}
+#contact a:hover {color:#eee;}
+#contact .chat button {background:#242424;color:#eee;border:1px solid #555;}
+@media (hover: hover) {#contact .chat button:hover {background: #9c9c9c;border:1px solid #333;color:#222;}}
+#contact form textarea{border-color:#414141;}
+#contact form textarea:hover {outline: 4px solid #444;border:1px solid #aaa;}
+#contact form textarea:focus {outline: 4px solid #555;border:1px solid #ddd;}
+#contact form textarea {color:#eee;outline:0 solid #333;border:1px solid #555;}
+#contact .answer p{color:#eee;background:#000;border:1px solid #292929;}
+#contact form button {background:#0e0e0e;}
+#contact form button:disabled, #contact form button[disabled]  {background:transparent;border-color:#555;color:#eee;opacity:0.6;}
+#contact form button {opacity:1;border-color:#777;}
+#contact form textarea:disabled, #contact form textarea[disabled] {background:transparent;border-color:#414141}
+
+#work img {filter:grayscale(0.2)}

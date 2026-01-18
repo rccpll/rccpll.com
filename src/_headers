@@ -1,0 +1,14 @@
+/*.html
+  Cache-Control: no-cache
+
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/work/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/work/*.js
+  Cache-Control: public, max-age=31536000, immutable

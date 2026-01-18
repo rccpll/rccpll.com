@@ -1,0 +1,16 @@
+{
+  "name": "rccpll-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "npm run build && concurrently \"npm run watch\" \"npx wrangler pages dev dist\"",
+    "watch": "nodemon --watch src --ext html,css,js --exec \"node build.mjs\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "esbuild": "^0.24.2",
+    "nodemon": "^3.1.9",
+    "wrangler": "^3.99.0"
+  }
+}
