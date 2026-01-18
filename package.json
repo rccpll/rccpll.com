@@ -5,7 +5,8 @@
   "scripts": {
     "build": "node build.mjs",
     "dev": "npm run build && concurrently \"npm run watch\" \"npx wrangler pages dev dist\"",
-    "watch": "nodemon --watch src --ext html,css,js --exec \"node build.mjs\""
+    "watch": "nodemon --watch src --ext html,css,js --exec \"node build.mjs\"",
+    "convert-images": "node convert-images.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",

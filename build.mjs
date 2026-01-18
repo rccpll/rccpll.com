@@ -2,7 +2,6 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import * as esbuild from "esbuild";
-import sharp from "sharp";
 
 const SRC = "src";
 const OUT = "dist";
@@ -81,31 +80,22 @@ for (const file of jsFiles) {
   }
 }
 
-// Convert PNG images to WebP (excluding favicons)
-const allFiles = await walk(OUT);
-const pngFiles = allFiles.filter(f => f.endsWith('.png') && !f.includes('favicon'));
-for (const img of pngFiles) {
-  const webpPath = img.replace('.png', '.webp');
-  try {
-    await sharp(img).webp({ quality: 85 }).toFile(webpPath);
-  } catch (e) {
-    console.warn(`Failed to convert ${img} to WebP:`, e.message);
-  }
-}
-console.log(`Converted ${pngFiles.length} PNG images to WebP`);
-
-// 1) Fingerprint .css/.js files
+// 1) Fingerprint .css/.js and image files
 const files = await walk(OUT);
 const assetMap = new Map(); // oldRel -> newRel
 
+const assetExts = [".css", ".js", ".webp", ".png", ".jpg", ".jpeg", ".svg"];
+
 for (const file of files) {
-  if (!file.endsWith(".css") && !file.endsWith(".js")) continue;
+  const ext = path.extname(file).toLowerCase();
+  // Skip favicons and non-asset files
+  if (!assetExts.includes(ext)) continue;
+  if (file.includes("favicon")) continue;
 
   const buf = await fs.readFile(file);
   const h = shortHash(buf);
 
   const dir = path.dirname(file);
-  const ext = path.extname(file);
   const base = path.basename(file, ext);
 
   const newName = `${base}.${h}${ext}`;
@@ -118,33 +108,34 @@ for (const file of files) {
   assetMap.set(oldRel, newRel);
 }
 
-// 2) Rewrite references inside all HTML files
+// 2) Rewrite references inside HTML and CSS files
 const after = await walk(OUT);
+
+// Sort by path length descending to replace longer paths first
+// This prevents "css.css" from matching inside "w-css.css"
+const sortedEntries = [...assetMap.entries()].sort((a, b) => b[0].length - a[0].length);
+
 for (const file of after) {
-  if (!file.endsWith(".html")) continue;
+  if (!file.endsWith(".html") && !file.endsWith(".css")) continue;
 
-  let html = await fs.readFile(file, "utf8");
-  const htmlDir = toPosix(path.relative(OUT, path.dirname(file)));
-
-  // Sort by path length descending to replace longer paths first
-  // This prevents "css.css" from matching inside "w-css.css"
-  const sortedEntries = [...assetMap.entries()].sort((a, b) => b[0].length - a[0].length);
+  let content = await fs.readFile(file, "utf8");
+  const fileDir = toPosix(path.relative(OUT, path.dirname(file)));
 
   for (const [oldRel, newRel] of sortedEntries) {
-    // For HTML files in subdirectories, replace relative paths first
-    // e.g., if HTML is in work/ and asset is work/w-css.css, replace "w-css.css"
-    if (htmlDir && oldRel.startsWith(htmlDir + "/")) {
-      const relToHtml = oldRel.slice(htmlDir.length + 1);
-      const newRelToHtml = newRel.slice(htmlDir.length + 1);
-      html = html.split(relToHtml).join(newRelToHtml);
+    // For files in subdirectories, replace relative paths first
+    // e.g., if file is in work/ and asset is work/w-css.css, replace "w-css.css"
+    if (fileDir && oldRel.startsWith(fileDir + "/")) {
+      const relToFile = oldRel.slice(fileDir.length + 1);
+      const newRelToFile = newRel.slice(fileDir.length + 1);
+      content = content.split(relToFile).join(newRelToFile);
     }
 
     // Replace both "foo.css" and "/foo.css" occurrences
-    html = html.split(oldRel).join(newRel);
-    html = html.split("/" + oldRel).join("/" + newRel);
+    content = content.split(oldRel).join(newRel);
+    content = content.split("/" + oldRel).join("/" + newRel);
   }
 
-  await fs.writeFile(file, html);
+  await fs.writeFile(file, content);
 }
 
-console.log("Built to dist/ with fingerprinted CSS/JS");
+console.log("Built to dist/ with fingerprinted assets");
