@@ -12,3 +12,9 @@
 
 /work/*.js
   Cache-Control: public, max-age=31536000, immutable
+
+/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicon/*
+  Cache-Control: public, max-age=31536000, immutable

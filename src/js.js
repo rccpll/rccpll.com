@@ -43,13 +43,13 @@ if (!isSafari) {
     mouseEnterTheEye = false;
   });
 
-  document.onmousemove = (e) => {
+  document.onmousemove = throttle((e) => {
     if (mouseEnterTheEye === false) {
       mouseX = (e.clientX * 100) / window.innerWidth;
       mouseY = (e.clientY * 100) / window.innerHeight;
       updatePupilPosition(mouseX, mouseY);
     }
-  };
+  }, 8);
 
   document.addEventListener('mouseleave', (e) => {
     if (

@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import * as esbuild from "esbuild";
+import sharp from "sharp";
 
 const SRC = "src";
 const OUT = "dist";
@@ -79,6 +80,19 @@ for (const file of jsFiles) {
     await fs.copyFile(srcPath, outPath);
   }
 }
+
+// Convert PNG images to WebP (excluding favicons)
+const allFiles = await walk(OUT);
+const pngFiles = allFiles.filter(f => f.endsWith('.png') && !f.includes('favicon'));
+for (const img of pngFiles) {
+  const webpPath = img.replace('.png', '.webp');
+  try {
+    await sharp(img).webp({ quality: 85 }).toFile(webpPath);
+  } catch (e) {
+    console.warn(`Failed to convert ${img} to WebP:`, e.message);
+  }
+}
+console.log(`Converted ${pngFiles.length} PNG images to WebP`);
 
 // 1) Fingerprint .css/.js files
 const files = await walk(OUT);
