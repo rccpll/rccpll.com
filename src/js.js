@@ -1,18 +1,17 @@
 /* eslint-disable no-empty */
+const scrollBehavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+
+// Demo mockups are pictures for assistive tech (role="img" / aria-hidden):
+// keep their buttons, links and inputs out of the keyboard tab order.
+document.querySelectorAll('main [role="img"], main [aria-hidden="true"]').forEach((demo) => {
+  demo.querySelectorAll('a, button, input, textarea, select').forEach((el) => {
+    el.tabIndex = -1;
+  });
+});
 // THE EYE
 const theEye = document.querySelector('#theeye');
 const pupil = document.querySelector('.pupil');
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-function throttle(callback, delay) {
-  let lastExecution = 0;
-  return function (...args) {
-    const now = new Date().getTime();
-    if (now - lastExecution >= delay) {
-      lastExecution = now;
-      callback(...args);
-    }
-  };
-}
 function updatePupilPosition(x, y) {
   const xPercentage = `${x}%`;
   const yPercentage = `${y}%`;
@@ -22,34 +21,42 @@ function updatePupilPosition(x, y) {
 }
 
 if (!isSafari) {
-  let mouseEnterTheEye = false;
-  let mouseX = 0;
-  let mouseY = 0;
+  let insideEye = false;
+  let lastEvent = null;
+  let frame = 0;
+
+  // One listener for the whole page, at most one pupil update per frame
+  document.addEventListener(
+    'mousemove',
+    (e) => {
+      lastEvent = e;
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        if (insideEye) {
+          const rect = theEye.getBoundingClientRect();
+          updatePupilPosition(
+            ((lastEvent.clientX - rect.left) * 100) / rect.width,
+            ((lastEvent.clientY - rect.top) * 100) / rect.height
+          );
+        } else {
+          updatePupilPosition(
+            (lastEvent.clientX * 100) / window.innerWidth,
+            (lastEvent.clientY * 100) / window.innerHeight
+          );
+        }
+      });
+    },
+    { passive: true }
+  );
 
   theEye.addEventListener('mouseenter', () => {
-    mouseEnterTheEye = true;
-    const rect = theEye.getBoundingClientRect();
-    theEye.addEventListener(
-      'mousemove',
-      throttle((ev) => {
-        const x = ((ev.clientX - rect.left) * 100) / rect.width;
-        const y = ((ev.clientY - rect.top) * 100) / rect.height;
-        updatePupilPosition(x, y);
-      }, 10)
-    );
+    insideEye = true;
   });
 
   theEye.addEventListener('mouseleave', () => {
-    mouseEnterTheEye = false;
+    insideEye = false;
   });
-
-  document.onmousemove = throttle((e) => {
-    if (mouseEnterTheEye === false) {
-      mouseX = (e.clientX * 100) / window.innerWidth;
-      mouseY = (e.clientY * 100) / window.innerHeight;
-      updatePupilPosition(mouseX, mouseY);
-    }
-  }, 8);
 
   document.addEventListener('mouseleave', (e) => {
     if (
@@ -228,7 +235,7 @@ tecaSect.addEventListener('mouseleave', () => {
   tecaWrap.classList.add('tecstart');
   tecaWrap.scrollTo({
     top: 0,
-    behavior: 'smooth',
+    behavior: scrollBehavior,
   });
 });
 
@@ -372,21 +379,35 @@ const firstChat = contactChat.querySelector('.firstChat');
 const secondChat = contactChat.querySelector('.secondChat');
 const handleSuccess = contactChat.querySelector('.handleSuccess');
 const handleError = contactChat.querySelector('.handleError');
+const chatStatus = document.querySelector('#chatStatus');
 const messageObject = {
   contact: null,
   message: null,
 };
 
 // on input focus display first question
-prompt.addEventListener('click', () => {
+prompt.addEventListener('focus', () => {
   firstChat.classList.remove('hide');
-  prompt.scrollIntoView({ behavior: 'smooth' });
+  prompt.scrollIntoView({ behavior: scrollBehavior });
 });
 
 // on "submit" take the text and add it to the conversation
 prompt.addEventListener('input', () => {
   sendButton.disabled = prompt.value.trim() === '';
 });
+
+// add the visitor's text as a chat bubble (textContent, never HTML)
+function addAnswer(before, text) {
+  const bubble = document.createElement('div');
+  bubble.className = 'chat answer';
+  const p = document.createElement('p');
+  p.textContent = text;
+  const time = document.createElement('span');
+  time.className = 'time';
+  time.textContent = 'Now';
+  bubble.append(p, time);
+  before.before(bubble);
+}
 
 sendButton.addEventListener('click', (e) => {
   e.preventDefault();
@@ -398,28 +419,19 @@ sendButton.addEventListener('click', (e) => {
   } else {
     sendButton.disabled = false;
     if (secondChat.classList.contains('hide')) {
-      const htmlMessage = `
-                          <div class="chat answer">
-                            <p>${message.replace(/\n/g, '<br>')}</p>
-                            <span class="time">Now</span>
-                          </div>`;
-      secondChat.insertAdjacentHTML('beforeBegin', htmlMessage);
-      prompt.scrollIntoView({ behavior: 'smooth' });
+      addAnswer(secondChat, message);
+      prompt.scrollIntoView({ behavior: scrollBehavior });
       setTimeout(() => {
         secondChat.classList.remove('hide');
-        prompt.scrollIntoView({ behavior: 'smooth' });
+        chatStatus.textContent = 'Thanks! Now leave an email or phone number and press Send.';
+        prompt.scrollIntoView({ behavior: scrollBehavior });
       }, 1000);
       messageObject.message = message;
       prompt.value = '';
       sendButton.disabled = true;
       prompt.focus();
     } else {
-      const htmlMessage = `
-                                  <div class="chat answer">
-                                    <p>${message.replace(/\n/g, '<br>')}</p>
-                                    <span class="time">Now</span>
-                                  </div>`;
-      handleSuccess.insertAdjacentHTML('beforeBegin', htmlMessage);
+      addAnswer(handleSuccess, message);
       messageObject.contact = message;
       sendMessage();
     }
@@ -433,11 +445,6 @@ function sendMessage() {
   handleError.classList.add('hide');
   handleSuccess.classList.add('hide');
 
-  // thinking
-
-  console.log(messageObject.message);
-  console.log(messageObject.contact);
-
   fetch('/api/chat', {
     method: 'POST',
     headers: {
@@ -450,21 +457,30 @@ function sendMessage() {
       if (data.success) {
         // Message sent successfully
         handleSuccess.classList.remove('hide');
-        prompt.scrollIntoView({ behavior: 'smooth' });
+        chatStatus.textContent = 'Message sent. You will hear from me soon.';
+        chatSendAgain.focus();
+        prompt.scrollIntoView({ behavior: scrollBehavior });
       } else {
         // Handle the error
-        handleError.classList.remove('hide');
-        prompt.scrollIntoView({ behavior: 'smooth' });
+        showChatError();
+        prompt.scrollIntoView({ behavior: scrollBehavior });
       }
     })
     .catch((error) => {
       // Catch any exceptions that may occur
-      handleError.classList.remove('hide');
-      prompt.scrollIntoView({ behavior: 'smooth' });
+      showChatError();
+      prompt.scrollIntoView({ behavior: scrollBehavior });
     });
 }
 
+function showChatError() {
+  handleError.classList.remove('hide');
+  chatStatus.textContent = 'Sorry, your message did not go through. Try again or write to hi@rccpll.com.';
+  chatTryAgain.focus();
+}
+
 const chatSendAgain = document.querySelector('#chatSendAgain');
+const chatTryAgain = document.querySelector('#chatTryAgain');
 chatSendAgain.addEventListener('click', sendAnother);
 
 function sendAnother() {
@@ -475,6 +491,7 @@ function sendAnother() {
     answer.remove();
   });
   prompt.disabled = false;
+  chatStatus.textContent = '';
   prompt.focus();
 }
 
@@ -483,9 +500,11 @@ function copyEmail(event) {
   navigator.clipboard.writeText(email);
   const copyButton = event.currentTarget;
   const copyMessage = copyButton.querySelector('span');
+  copyMessage.textContent = 'Copied!';
   copyMessage.style.opacity = '0.8';
   setTimeout(() => {
     copyMessage.style.opacity = '0';
+    copyMessage.textContent = '';
   }, 2000);
 }
 
@@ -494,7 +513,6 @@ copyButtons.forEach((button) => {
   button.addEventListener('click', copyEmail);
 });
 
-const chatTryAgain = document.querySelector('#chatTryAgain');
 chatTryAgain.addEventListener('click', sendMessage);
 
 prompt.addEventListener('input', () => {
@@ -502,71 +520,13 @@ prompt.addEventListener('input', () => {
   prompt.style.height = `${prompt.scrollHeight + 2}px`;
 });
 
-// STATE BUTTONS
+// STATE BUTTONS (dark mode lives in theme.js)
 
 const mainMain = document.querySelector('body > main');
 const clrBtn = document.querySelector('#clrBtn');
-const darkBtn = document.querySelector('#darkBtn');
 
 clrBtn.addEventListener('click', () => {
-  clrBtn.classList.toggle('clr');
+  const on = clrBtn.classList.toggle('clr');
   mainMain.classList.toggle('clr');
-});
-
-function switcher(prefName, offLabel, onLabel, suffix, defaultValue, apply) {
-  let enabled;
-  function sync() {
-    apply(enabled);
-    try {
-      if (localStorage.getItem(prefName) || enabled !== defaultValue) {
-        localStorage.setItem(prefName, enabled);
-      }
-    } catch (e) {}
-  }
-
-  darkBtn.addEventListener('click', () => {
-    enabled = +!enabled;
-    sync();
-  });
-  try {
-    enabled = localStorage.getItem(prefName);
-  } catch (e) {}
-  enabled = +(enabled || defaultValue);
-  sync();
-  return sync;
-}
-
-let darkModeDefault = 0;
-try {
-  darkModeDefault = matchMedia('(prefers-color-scheme: dark)').matches;
-} catch (e) {}
-
-const colorSchemeMeta = document.querySelector('meta[name=color-scheme]');
-let stylesheetElements = document.querySelectorAll(
-  '[media="screen and (prefers-color-scheme: dark)"]'
-);
-
-const syncDarkMode = switcher(
-  'dark',
-  'light',
-  'dark',
-  ' theme',
-  darkModeDefault,
-  (enabled) => {
-    colorSchemeMeta.content = enabled ? 'dark' : 'light';
-    stylesheetElements.forEach((element) => {
-      element.media = enabled ? 'screen' : 'not all';
-    });
-  }
-);
-
-// If anything is in the source after this script, handle it.
-document.addEventListener('DOMContentLoaded', () => {
-  stylesheetElements = [
-    ...stylesheetElements,
-    ...document.querySelectorAll(
-      '[media="screen and (prefers-color-scheme: dark)"]'
-    ),
-  ];
-  syncDarkMode();
+  clrBtn.setAttribute('aria-pressed', String(on));
 });

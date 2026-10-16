@@ -1,4 +1,10 @@
 @charset "UTF-8";
+/* Fonts: self-hosted subsets of Work Sans and Eczar (SIL Open Font License), downloaded from Google Fonts.
+   work-sans.woff2 covers A-Z a-z 0-9 and . , : ; / - _ # % & ( ) + ! ? ' " € ▲   eczar.woff2 covers A-Z a-z and space.
+   Characters outside these sets fall back to the next font in the stack. */
+@font-face {font-family:'Work Sans';src:url(fonts/work-sans.woff2) format('woff2');font-weight:400 600;font-display:swap;}
+@font-face {font-family:'Eczar';src:url(fonts/eczar.woff2) format('woff2');font-weight:500 600;font-display:swap;}
+
 
 html {font-size:100%;line-height:1.3;scroll-behavior:smooth;background:#fefefe;background: radial-gradient(circle, rgba(254,254,254,1) 74%, rgba(249,249,249,1) 92%);color:#000;}
 body {margin:0 1rem;}
@@ -9,15 +15,6 @@ body, html, input, textarea {font-family: ui-sans-serif,system-ui,-apple-system,
 	--gap:1rem;
 	--half-width:calc((var(--full-width) / 2) - (0.5 * var(--gap)));
 	--quarter-width:calc((var(--half-width) / 2) - (0.5 * var(--gap)));
-	--color-text:#1a1a1a;
-	--color-bg:#ffffff;
-	--color-accent:#026bff;
-	--color-gray:#c1baba;
-	--color-gray-dark:#353540;
-	--color-gray-light:#e1e5ea;
-	--color-bg-section:#f3f3f5;
-	--transition-fast:0.2s ease;
-	--transition-normal:0.3s ease;
 }
 body > header, body > main {display:grid;grid-template: repeat(2, auto) / 1fr 1fr;max-width:var(--full-width);margin:6.9rem auto;grid-gap: var(--gap);}
 
@@ -571,7 +568,8 @@ svg.m-top .firstmsecret {opacity:1}
 
 
 #f-desys .tabs-container{position:absolute;bottom:1rem;width:auto;background: rgba(255, 255, 255, 0.7);backdrop-filter: blur(8px);-webkit-backdrop-filter: blur(8px);border-radius:4rem;padding:0.25rem;z-index:100;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;transition:0.5s transform cubic-bezier(.5,-.75,.7,2);transform:translateY(3rem);will-change: transform;}
-#f-desys:hover .tabs-container {transform:translateY(0);}
+#f-desys:hover .tabs-container, #f-desys:focus-within .tabs-container {transform:translateY(0);}
+#f-desys .tabs input:focus-visible + label {outline:2px solid currentColor;outline-offset:2px;border-radius:4rem;}
 #f-desys .tabs {display:grid;grid-template-columns:1fr 1fr 1fr;position:relative;cursor:pointer;}
 
 #f-desys .tabs__indicator {position:absolute;width:33.3%;height:100%;background:#c1baba;border-radius:4rem;overflow:hidden;transition:translate 0.25s, background 0.3s ease;;pointer-events:none;}
@@ -620,17 +618,17 @@ svg.m-top .firstmsecret {opacity:1}
 #facfi:hover aside nav a.active, #facfi:hover aside nav a, .clr #facfi nav a.active, .clr #facfi nav a {color:#353540;}
 #facfi:hover aside nav a svg, .clr #facfi aside nav a svg {fill:#5C5C70;}
 
-#facfi main {padding:1.35rem 2rem 2rem;font-family:Work Sans;}
+#facfi .fac-main {padding:1.35rem 2rem 2rem;font-family:Work Sans;}
 #facfi .famobh1 {font-size:1.25rem;font-weight:500;line-height:1;letter-spacing:0.15px;color:#c1baba;margin:0;font-family:Work Sans;}
 #facfi nav a {font-size:0.75rem;font-weight:500;line-height:1.2;color:#c1baba;text-decoration:none;padding-bottom:0.25rem;margin-right:1.1rem;font-size:0.875rem;pointer-events:none;font-family:Work Sans;}
 #facfi nav a:last-child {margin-right:0;}
 #facfi nav a:hover, #facfi nav a.active:hover {color:#026BFF;}
-#facfi main nav a.active{font-weight:600;color:#c1baba;border-bottom:2px solid #c1baba}
+#facfi .fac-main nav a.active{font-weight:600;color:#c1baba;border-bottom:2px solid #c1baba}
 #facfi table tr th {font-size:0.625rem;font-weight:500;line-height:1.2;letter-spacing:0.2px;color:#c1baba;}
 #facfi table tr td {font-size:0.75rem;font-weight:500;line-height:1.2;letter-spacing:0.1px;color:#c1baba}
 #facfi:hover .famobh1, #facfi:hover table tr td, .clr #facfi .famobh1, .clr #facfi table tr td {color:#353540;}
 #facfi:hover nav a, #facfi:hover table tr th, .clr #facfi nav a, .clr #facfi table tr th  {color:#5C5C70}
-#facfi:hover main nav a.active, .clr #facfi main nav a.active {color:#353540;border-bottom:2px solid #026BFF}
+#facfi:hover .fac-main nav a.active, .clr #facfi .fac-main nav a.active {color:#353540;border-bottom:2px solid #026BFF}
 
 #facfi nav {display:flex;margin-top:1.5rem;align-items:baseline;width: 143%;}
 #facfi nav a span {display:inline-block;font-size:0.75rem;background:#E4E7EC;border-radius:1rem;padding:0.125rem 0.25rem;margin-left:0.125rem;color:#c1baba;}
@@ -778,11 +776,11 @@ svg.m-top .firstmsecret {opacity:1}
 #contact{width:var(--half-width);position:relative;box-sizing:border-box;overflow:visible;display:flex;flex-direction:column;}
 #contact #messageContainer {display:flex;flex-direction:column;}
 #contact .chat {margin-bottom:1rem;max-width:65%;height:auto;transform:scale(1);transition:transform 0.3s ease, opacity 0.3s ease;}
-#contact .chat.hide {display:block;transform:scale(0);height:0;margin-bottom:0;}
+#contact .chat.hide {display:block;transform:scale(0);height:0;margin-bottom:0;visibility:hidden;transition:transform 0.3s ease, opacity 0.3s ease, visibility 0s 0.3s;}
 #contact .answer {align-self:flex-end;animation:0.3s ease-in showUp;}
-#contact .answer p{color:#fff;background:#000;border:1px solid #000;}
+#contact .answer p{color:#fff;background:#000;border:1px solid #000;white-space:pre-line;}
 @keyframes showUp {from {transform:scale(0);} to {transform:scale(1);}}
-#contact span {display:block;font-size:0.75rem;color:#8e8e8e;padding-left:1rem;line-height:1;position:relative;}
+#contact span {display:block;font-size:0.75rem;color:#767676;padding-left:1rem;line-height:1;position:relative;}
 #contact span.time {margin-top:0.25rem;}
 #contact span.chat-ric-name:before {content:'';position:absolute;width:6px;height:6px;border-radius:50%;background:#34c85a;left:3px;top:3px;}
 #contact p {background:#f3f3f5;width:fit-content;padding:0.4rem 0.9rem;border-radius:1rem;margin:0.3rem 0 0;border:1px solid #f3f3f5;}
@@ -793,7 +791,7 @@ svg.m-top .firstmsecret {opacity:1}
 #contact .chat .copy-btn {display:flex;align-items:center;justify-items:center;position:relative;cursor:copy;}
 #contact .chat .copy-btn span{position:absolute;right:-3.7rem;font-size:0.9rem;opacity:0;pointer-events:none;}
 #contact form {width:100%;display:flex;}
-#contact form textarea {padding:0.5rem 1rem;border-radius:1rem;border:1px solid #c1baba;box-sizing: border-box;font-size:1rem;margin-top:1rem;flex-grow:1;resize: none;height:auto;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;overflow-y:hidden;transition:border-color 0.3s ease, outline 0.3s ease;outline: 0 solid #f3f3f5;background:transparent;}
+#contact form textarea {padding:0.5rem 1rem;border-radius:1rem;border:1px solid #8a8a8a;box-sizing: border-box;font-size:1rem;margin-top:1rem;flex-grow:1;resize: none;height:auto;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;overflow-y:hidden;transition:border-color 0.3s ease, outline 0.3s ease;outline: 0 solid #f3f3f5;background:transparent;}
 #contact form textarea:hover {outline: 4px solid #f3f3f5;}
 #contact form textarea:focus {outline:none;border:1px solid #000;box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;outline: 4px solid #f3f3f5;}
 #contact form button {padding:0.5rem 1rem;border-radius:1rem;border:1px solid #000; background:#000;color:#fff;box-sizing: border-box;font-size:1rem;margin-top:1rem;margin-left:0.5rem;opacity:1;transition:opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;max-height:2.3rem;align-self:flex-end;cursor:pointer;}
@@ -931,4 +929,11 @@ svg.m-top .firstmsecret {opacity:1}
 @media screen and (max-width:23rem) {
 	#famob > div {width:17rem;}
 	#f-desys .typography ul {width: 200%;}
+}
+
+/* ACCESSIBILITY */
+.sr-only {position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0 0 0 0) !important;white-space:nowrap !important;border:0 !important;}
+@media (prefers-reduced-motion: reduce) {
+  html {scroll-behavior:auto;}
+  *, *::before, *::after {animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
 }

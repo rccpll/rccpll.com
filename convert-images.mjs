@@ -1,52 +1,57 @@
 #!/usr/bin/env node
+// Turns the originals in img-originals/ into web-sized WebP files in src/img/.
+//
+//   npm run convert-images
+//
+// Each original becomes <name>-1280.webp and <name>-2560.webp (only sizes
+// smaller than the original are made). Each file is saved lossy or lossless,
+// whichever is smaller: flat UI screenshots usually win with lossless.
+// The script prints an <img> tag with width/height to paste into the HTML.
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 
-const IMG_DIR = "src/img";
+const SRC_DIR = "img-originals";
+const OUT_DIR = "src/img";
+const WIDTHS = [1280, 2560];
+// Images shown small get their own sizes (2x the displayed size)
+const CUSTOM_WIDTHS = { fapfp: [80] };
 
-async function walk(dir) {
-  const out = [];
-  const entries = await fs.readdir(dir, { withFileTypes: true });
-  for (const e of entries) {
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) out.push(...(await walk(p)));
-    else out.push(p);
-  }
-  return out;
+async function smallestWebp(input, width) {
+  const resized = () => sharp(input).resize({ width, withoutEnlargement: true });
+  const [lossy, lossless] = await Promise.all([
+    resized().webp({ quality: 80 }).toBuffer({ resolveWithObject: true }),
+    resized().webp({ lossless: true }).toBuffer({ resolveWithObject: true }),
+  ]);
+  return lossy.data.length <= lossless.data.length ? lossy : lossless;
 }
 
-const allFiles = await walk(IMG_DIR);
-const pngFiles = allFiles.filter(f => f.endsWith('.png') && !f.includes('favicon'));
+const files = (await fs.readdir(SRC_DIR)).filter((f) => /\.(png|jpe?g|webp)$/i.test(f));
 
-let converted = 0;
-let skipped = 0;
+for (const file of files) {
+  const input = path.join(SRC_DIR, file);
+  const name = path.parse(file).name;
+  const { width } = await sharp(input).metadata();
 
-for (const img of pngFiles) {
-  const webpPath = img.replace('.png', '.webp');
+  let widths = CUSTOM_WIDTHS[name] || WIDTHS.filter((w) => w <= width);
+  // Originals barely bigger than the smallest size stay at their own width:
+  // resampling them costs sharpness and often makes the file bigger
+  if (!CUSTOM_WIDTHS[name] && width < WIDTHS[0] * 1.25) widths = [width];
 
-  // Check if WebP already exists and is newer than PNG
-  try {
-    const [pngStat, webpStat] = await Promise.all([
-      fs.stat(img),
-      fs.stat(webpPath).catch(() => null)
-    ]);
-
-    if (webpStat && webpStat.mtime >= pngStat.mtime) {
-      skipped++;
-      continue;
+  const made = [];
+  for (const w of widths) {
+    const out = path.join(OUT_DIR, `${name}-${w}.webp`);
+    const [srcStat, outStat] = await Promise.all([fs.stat(input), fs.stat(out).catch(() => null)]);
+    if (!outStat || outStat.mtime < srcStat.mtime) {
+      const { data } = await smallestWebp(input, w);
+      await fs.writeFile(out, data);
+      console.log(`${out}  ${Math.round(data.length / 1024)}KB`);
     }
-  } catch (e) {
-    // Continue with conversion if stat fails
+    const meta = await sharp(out).metadata();
+    made.push({ w, h: meta.height, file: `img/${name}-${w}.webp` });
   }
 
-  try {
-    await sharp(img).webp({ quality: 85 }).toFile(webpPath);
-    console.log(`Converted: ${img} -> ${webpPath}`);
-    converted++;
-  } catch (e) {
-    console.warn(`Failed to convert ${img}:`, e.message);
-  }
+  const first = made[0];
+  const srcset = made.length > 1 ? ` srcset="${made.map((m) => `${m.file} ${m.w}w`).join(", ")}"` : "";
+  console.log(`  <img src="${first.file}"${srcset} width="${first.w}" height="${first.h}" alt="">\n`);
 }
-
-console.log(`\nDone! Converted: ${converted}, Skipped (up-to-date): ${skipped}`);

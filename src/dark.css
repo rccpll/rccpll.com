@@ -1,14 +1,5 @@
 @charset "UTF-8";
 
-:root {
-	--color-text:#eee;
-	--color-bg:#222;
-	--color-gray:#888;
-	--color-gray-dark:#333;
-	--color-gray-light:#444;
-	--color-bg-section:#333;
-}
-
 html, #work section{background:#222;color:#eee;border:none;}
 #work p, #btn-available, header > nav a, nav a.rccpll svg, nav a.rccpll  {color:#bbb;opacity:1;}
 header > nav a:hover, #btn-available:hover {color:#eee;}
@@ -29,14 +20,7 @@ body > main > section {background:#333;border:1px solid #444;}
 #stateBtns #clrBtn.clr span {background:#005eff;border-color:#005eff;opacity:0.8;}
 #stateBtns #darkBtn span:before {top:-0.2rem;left:-0.2rem;width:0.5rem;height:0.5rem;background: #242424;}
 #stateBtns #darkBtn:hover span:before {background: #9c9c9c;}
-#sunDots svg:first-child {transform: translate(0, 0);}
-#sunDots svg:nth-child(2) {transform: translate(0, 0);}
-#sunDots svg:nth-child(3) {transform: translate(0, 0);}
-#sunDots svg:nth-child(4) {transform: translate(0, 0);}
-#sunDots svg:nth-child(5) {transform: translate(0, 0);}
-#sunDots svg:nth-child(6) {transform: translate(0, 0);}
-#sunDots svg:nth-child(7) {transform: translate(0, 0);}
-#sunDots svg:nth-child(8) {transform: translate(0, 0);}
+#sunDots svg:nth-child(n) {transform:none;} /* moon: collapse the sun rays */
 
 
 #theeye:hover {border-color:#121212;}
@@ -136,7 +120,7 @@ body > main > section {background:#333;border:1px solid #444;}
 #facfi .table-content-row:hover .table-action svg path {fill:#eee;}
 #facfi:hover nav a, #facfi:hover table tr th, .clr #facfi nav a, .clr #facfi table tr th, #facfi:hover .famobh1, #facfi:hover table tr td, .clr #facfi .famobh1, .clr #facfi table tr td, #work #facfi nav a, #work #facfi table tr th, #work #facfi .famobh1, #work #facfi table tr td, #facfi .table-issue span, #facfi .table-due span {color: #eee;}
 #facfi:hover .actBtnRow p, .clr #facfi .actBtnRow p, #work #facfi .actBtnRow p {color:#eee;opacity:0.9;}
-#facfi:hover main nav a.active, .clr #facfi main nav a.active, #work #facfi main nav a.active {border-bottom:2px solid #089fff;color:#F5F6FA;}
+#facfi:hover .fac-main nav a.active, .clr #facfi .fac-main nav a.active, #work #facfi .fac-main nav a.active {border-bottom:2px solid #089fff;color:#F5F6FA;}
 #facfi tr:has(input[type="checkbox"]:checked), #facfi:hover tr:has(input[type="checkbox"]:checked), .clr #facfi tr:has(input[type="checkbox"]:checked), #facfi .table-content-row:hover  {background:#444;box-shadow:-4px 0px 0px #444, 4px 0px 0px #444;}
 #facfi .table-content-row, #facfi .table-header-row {border-bottom:1px solid #333;}
 #facfi .table-content-row:hover, #facfi:hover tr:has(input[type="checkbox"]:checked):hover {background:#000;box-shadow: -4px 0px 0px #000, 4px 0px 0px #000;}
@@ -169,7 +153,7 @@ body > main > section {background:#333;border:1px solid #444;}
 #contact form textarea{border-color:#414141;}
 #contact form textarea:hover {outline: 4px solid #444;border:1px solid #aaa;}
 #contact form textarea:focus {outline: 4px solid #555;border:1px solid #ddd;}
-#contact form textarea {color:#eee;outline:0 solid #333;border:1px solid #555;}
+#contact form textarea {color:#eee;outline:0 solid #333;border:1px solid #808080;}
 #contact .answer p{color:#eee;background:#000;border:1px solid #292929;}
 #contact form button {background:#0e0e0e;}
 #contact form button:disabled, #contact form button[disabled]  {background:transparent;border-color:#555;color:#eee;opacity:0.6;}
@@ -177,3 +161,4 @@ body > main > section {background:#333;border:1px solid #444;}
 #contact form textarea:disabled, #contact form textarea[disabled] {background:transparent;border-color:#414141}
 
 #work img {filter:grayscale(0.2)}
+#facfi .actBtnRow button:focus-visible {outline:2px solid #089fff;outline-offset:2px;}

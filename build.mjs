@@ -1,8 +1,9 @@
+// Build: copy src/ to dist/, then give CSS, JS, images and fonts content-hashed
+// names (css.0b4ef038.css) and rewrite references to them. Files ship as written:
+// Cloudflare compresses them, so minifying would save only ~1KB per file.
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
-import * as esbuild from "esbuild";
-import { minify as minifyHtml } from "html-minifier-terser";
 
 const SRC = "src";
 const OUT = "dist";
@@ -15,6 +16,7 @@ async function copyDir(src, dest) {
   await fs.mkdir(dest, { recursive: true });
   const entries = await fs.readdir(src, { withFileTypes: true });
   for (const e of entries) {
+    if (e.name.startsWith(".") && e.name !== ".well-known") continue; // .DS_Store etc.
     const from = path.join(src, e.name);
     const to = path.join(dest, e.name);
     if (e.isDirectory()) await copyDir(from, to);
@@ -44,109 +46,56 @@ function toPosix(p) {
 await rmrf(OUT);
 await copyDir(SRC, OUT);
 
-// Minify CSS and JS files
-const cssFiles = ['css.css', 'dark.css', 'work/w-css.css'];
-const jsFiles = ['js.js', 'work/w-js.js'];
-
-for (const file of cssFiles) {
-  const srcPath = path.join(SRC, file);
-  const outPath = path.join(OUT, file);
-  try {
-    await esbuild.build({
-      entryPoints: [srcPath],
-      bundle: false,
-      minify: true,
-      outfile: outPath,
-      loader: { '.css': 'css' },
-    });
-  } catch (e) {
-    // If minification fails, just copy the file
-    await fs.copyFile(srcPath, outPath);
-  }
-}
-
-for (const file of jsFiles) {
-  const srcPath = path.join(SRC, file);
-  const outPath = path.join(OUT, file);
-  try {
-    await esbuild.build({
-      entryPoints: [srcPath],
-      bundle: false,
-      minify: true,
-      outfile: outPath,
-    });
-  } catch (e) {
-    // If minification fails, just copy the file
-    await fs.copyFile(srcPath, outPath);
-  }
-}
-
-// 1) Fingerprint .css/.js and image files
-const files = await walk(OUT);
+// Fingerprint assets in two rounds: images and fonts first, so that when CSS
+// references them the CSS content (and so its hash) changes too. Then CSS/JS.
+// Favicons are left alone so their URLs stay stable.
 const assetMap = new Map(); // oldRel -> newRel
 
-const assetExts = [".css", ".js", ".webp", ".png", ".jpg", ".jpeg", ".svg"];
+async function fingerprint(exts) {
+  for (const file of await walk(OUT)) {
+    const ext = path.extname(file).toLowerCase();
+    if (!exts.includes(ext)) continue;
+    if (file.includes("favicon")) continue;
 
-for (const file of files) {
-  const ext = path.extname(file).toLowerCase();
-  // Skip favicons and non-asset files
-  if (!assetExts.includes(ext)) continue;
-  if (file.includes("favicon")) continue;
+    const h = shortHash(await fs.readFile(file));
+    const newPath = path.join(path.dirname(file), `${path.basename(file, ext)}.${h}${ext}`);
 
-  const buf = await fs.readFile(file);
-  const h = shortHash(buf);
-
-  const dir = path.dirname(file);
-  const base = path.basename(file, ext);
-
-  const newName = `${base}.${h}${ext}`;
-  const newPath = path.join(dir, newName);
-
-  const oldRel = toPosix(path.relative(OUT, file));
-  const newRel = toPosix(path.relative(OUT, newPath));
-
-  await fs.rename(file, newPath);
-  assetMap.set(oldRel, newRel);
+    await fs.rename(file, newPath);
+    assetMap.set(toPosix(path.relative(OUT, file)), toPosix(path.relative(OUT, newPath)));
+  }
 }
 
-// 2) Rewrite references inside HTML and CSS files
-const after = await walk(OUT);
+// Rewrite references to fingerprinted assets inside files with the given extensions
+async function rewrite(exts) {
+  // Sort by path length descending to replace longer paths first
+  // This prevents "css.css" from matching inside "w-css.css"
+  const sortedEntries = [...assetMap.entries()].sort((a, b) => b[0].length - a[0].length);
 
-// Sort by path length descending to replace longer paths first
-// This prevents "css.css" from matching inside "w-css.css"
-const sortedEntries = [...assetMap.entries()].sort((a, b) => b[0].length - a[0].length);
+  for (const file of await walk(OUT)) {
+    if (!exts.includes(path.extname(file))) continue;
 
-for (const file of after) {
-  if (!file.endsWith(".html") && !file.endsWith(".css")) continue;
+    let content = await fs.readFile(file, "utf8");
+    const fileDir = toPosix(path.relative(OUT, path.dirname(file)));
 
-  let content = await fs.readFile(file, "utf8");
-  const fileDir = toPosix(path.relative(OUT, path.dirname(file)));
-
-  for (const [oldRel, newRel] of sortedEntries) {
-    // For files in subdirectories, replace relative paths first
-    // e.g., if file is in work/ and asset is work/w-css.css, replace "w-css.css"
-    if (fileDir && oldRel.startsWith(fileDir + "/")) {
-      const relToFile = oldRel.slice(fileDir.length + 1);
-      const newRelToFile = newRel.slice(fileDir.length + 1);
-      content = content.split(relToFile).join(newRelToFile);
+    for (const [oldRel, newRel] of sortedEntries) {
+      // For files in subdirectories, replace relative paths first
+      // e.g., if file is in work/ and asset is work/w-css.css, replace "w-css.css"
+      if (fileDir && oldRel.startsWith(fileDir + "/")) {
+        const relToFile = oldRel.slice(fileDir.length + 1);
+        const newRelToFile = newRel.slice(fileDir.length + 1);
+        content = content.split(relToFile).join(newRelToFile);
+      }
+      // Covers "foo.css", "/foo.css" and "../foo.css"
+      content = content.split(oldRel).join(newRel);
     }
 
-    // Replace both "foo.css" and "/foo.css" occurrences
-    content = content.split(oldRel).join(newRel);
-    content = content.split("/" + oldRel).join("/" + newRel);
+    await fs.writeFile(file, content);
   }
-
-  // Minify HTML files
-  if (file.endsWith(".html")) {
-    content = await minifyHtml(content, {
-      collapseWhitespace: true,
-      removeComments: true,
-      minifyCSS: true,
-      minifyJS: true,
-    });
-  }
-
-  await fs.writeFile(file, content);
 }
+
+await fingerprint([".webp", ".png", ".jpg", ".jpeg", ".svg", ".woff2"]);
+await rewrite([".css"]);
+await fingerprint([".css", ".js"]);
+await rewrite([".html"]);
 
 console.log("Built to dist/ with fingerprinted assets");

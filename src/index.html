@@ -14,35 +14,30 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
     <link rel="manifest" href="favicon/site.webmanifest">
-    <meta property="og:url" content="https://www.rccpll.com" />
+    <link rel="canonical" href="https://rccpll.com/">
+    <meta property="og:url" content="https://rccpll.com/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Riccardo Pallicelli  ྾  Designer" />
-    <meta property="og:description" content=" Designing products and brands." />
+    <meta property="og:title" content="Riccardo Pallicelli | Designer" />
+    <meta property="og:description" content="Designing products and brands." />
     <meta property="og:image" content="https://rccpll.com/img/og-card.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content="1800" />
+    <meta property="og:image:height" content="945" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@rccpll" />
     <meta name="twitter:creator" content="@rccpll" />
-    <link rel="preload" href="css.css" as="style">
-    <link rel="preload" href="js.js" as="script">
     <link href="css.css" rel="stylesheet">
     <meta name=color-scheme content="light dark">
-    <link href="dark.css" rel="stylesheet" media="screen and (prefers-color-scheme: dark)">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Eczar:wght@500;600&text=agilecrtvhnolgy&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%E2%82%AC.,%2F-:%20%E2%96%B2_&display=swap" rel="stylesheet">
+    <link href="dark.css" rel="stylesheet" media="screen and (prefers-color-scheme: dark)" data-dark>
+    <script src="theme.js"></script>
 </head>
 
 <body>
     <header>
-        <h1><a href="index.html">Riccardo Pallicelli</a> designs products and brands.</h1>
+        <h1><a href="/">Riccardo Pallicelli</a> designs products and brands.</h1>
         <nav>
             <ul>
-                <!--<li><a href="">About</a></li>-->
-                <li><a href="https://read.cv/rccpll" target="_blank">Resume</a></li>
+                <!--<li><a>About</a></li>-->
+                <li><a href="https://read.cv/rccpll" target="_blank" rel="noopener">Resume<span class="sr-only"> (opens in a new tab)</span></a></li>
                 <li><a href="#contactwrap">Contact</a></li>
             </ul>
         </nav>
@@ -58,13 +53,13 @@
     </header>
     <main>
         <div id="stateBtns">
-            <button id="clrBtn">
+            <button id="clrBtn" aria-label="Colour mode" aria-pressed="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <button id="darkBtn">
-                <div id="sunDots">
+            <button id="darkBtn" aria-label="Dark mode" aria-pressed="false">
+                <span id="sunDots">
                     <svg version="1.1" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="250" cy="250" r="200" />
                     </svg>
@@ -89,13 +84,13 @@
                     <svg version="1.1" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="250" cy="250" r="200" />
                     </svg>
-                </div>
+                </span>
                 <span></span>
             </button>
         </div>
 
         <section id="theeye" class="horizontalrect">
-            <div>
+            <div role="img" aria-label="An eye that follows your cursor">
                 <svg width="531" height="398" viewBox="0 0 531 398" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M265.452 0.00757576C119.074 0.00757576 0 77.9482 0 173.752V224.221C0 320.016 119.078 397.952 265.452 397.952C411.826 397.952 530.904 320.012 530.904 224.208V173.745C530.904 77.9444 411.826 0 265.452 0V0.00757576ZM265.452 386.9C125.18 386.9 11.0605 313.918 11.0605 224.209V223.296C43.7389 295.024 145.379 347.487 265.452 347.487C372.181 347.487 459.004 294.073 459.004 228.414C458.96 217.488 456.609 206.696 452.111 196.737C429.294 145.282 352.538 109.346 265.448 109.346C185.022 109.346 113.445 140.007 84.9786 185.22C83.6602 180.097 82.9739 174.832 82.9442 169.542C82.9442 109.979 164.812 61.5229 265.449 61.5229C405.721 61.5229 519.84 134.505 519.84 224.213C519.84 313.919 405.72 386.904 265.449 386.904L265.452 386.9ZM440.84 198.981C418.467 245.348 346.973 277.558 265.452 277.558C183.93 277.558 112.438 245.348 90.064 198.981C112.437 152.613 183.93 120.403 265.452 120.403C346.973 120.403 418.466 152.613 440.84 198.981ZM265.452 50.4772C158.723 50.4772 71.8995 103.892 71.8995 169.55C71.944 180.476 74.2943 191.268 78.7926 201.227C101.61 252.682 178.366 288.618 265.456 288.618C345.881 288.618 417.459 257.958 445.925 212.745C447.244 217.867 447.93 223.132 447.96 228.422C447.96 287.985 366.092 336.441 265.455 336.441C125.183 336.441 11.0637 263.459 11.0637 173.751C11.0637 84.0449 125.184 11.0604 265.455 11.0604C405.726 11.0604 519.846 84.0424 519.846 173.751V174.664C487.168 102.936 385.528 50.473 265.455 50.473L265.452 50.4772Z" />
@@ -107,7 +102,7 @@
         </section>
 
         <section id="famob" class="bigsquare">
-            <div>
+            <div role="img" aria-label="Factris mobile app prototype">
                 <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 730">
                     <path
                         d="M.836 140.934h5.321c.463 0 .836.372.836.835v26.3a.834.834 0 0 1-.836.836H.836a.834.834 0 0 1-.836-.836v-26.3c0-.463.373-.835.836-.835Z"
@@ -269,24 +264,24 @@
                                 <path d="M6.08 9.829a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Z" fill="#0A0D13" />
                                 <path d="M6.08 8.936a2.857 2.857 0 1 0 0-5.714 2.857 2.857 0 0 0 0 5.714Z"
                                     fill="#091427" />
-                                <g filter="url(#a)">
+                                <g filter="url(#dyn-a)">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                         d="M4.112 4.167c-.339.036-.82.553-.856 1.57-.036 1.016.41 1.569.66 1.569.25 0 1.283-1.48.196-3.139Z"
                                         fill="#235A91" fill-opacity=".556" />
                                 </g>
-                                <g filter="url(#b)">
+                                <g filter="url(#dyn-b)">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                         d="M6.545 3.812c-.535.164-.637 1.027-.617 1.52.02.494.72 1.789 1.562 1.501.843-.288.987-1.356.637-2.076-.349-.72-.986-1.233-1.582-.945Z"
                                         fill="#235A91" fill-opacity=".556" />
                                 </g>
                                 <defs>
-                                    <filter id="a" x="3.038" y="3.952" width="1.777" height="3.57"
+                                    <filter id="dyn-a" x="3.038" y="3.952" width="1.777" height="3.57"
                                         filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
                                         <feFlood flood-opacity="0" result="BackgroundImageFix" />
                                         <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
                                         <feGaussianBlur stdDeviation=".108" result="effect1_foregroundBlur_1726_112" />
                                     </filter>
-                                    <filter id="b" x="5.71" y="3.515" width="2.81" height="3.575"
+                                    <filter id="dyn-b" x="5.71" y="3.515" width="2.81" height="3.575"
                                         filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
                                         <feFlood flood-opacity="0" result="BackgroundImageFix" />
                                         <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
@@ -324,7 +319,7 @@
 
                     <section class="fagreet">
                         <div>
-                            <img src="img/fapfp.webp" width="40" height="40" alt="profile picture of a black woman" />
+                            <img src="img/fapfp-80.webp" width="40" height="40" alt="profile picture of a black woman" />
                             <div>
                                 <p class="greeth2">Laura Palmer</p>
                                 <p>Fadel LCC</p>
@@ -423,7 +418,7 @@
         </section>
 
         <section id="colors" class="smallsquare">
-            <div>
+            <div role="img" aria-label="Colour swatches">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -431,7 +426,7 @@
         </section>
 
         <section id="revire" class="verticalrect">
-            <div>
+            <div role="img" aria-label="Revire">
                 <svg width="177" height="70" viewBox="0 0 177 70" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M101.343 61.7895C70.8714 61.8286 37.4543 65.0244 6.15219 66.0295C3.69155 66.1086 0.180474 64.805 0.00839226 62.212C-0.212653 58.8814 3.98754 56.9251 6.15299 56.7422C37.7175 54.077 70.707 54.2596 101.333 54.2205C131.833 54.1814 153.29 56.468 166.256 58.2231C167.943 58.4515 173.042 59.8339 174.361 60.4171C175.23 60.8011 176.379 61.9054 176.528 62.697C176.676 63.4886 176.499 64.6704 176.238 64.9835C175.062 66.3957 173.834 67.1422 173.015 67.5091C171.981 67.9726 170.762 68.3679 169.516 68.7085C166.662 69.4892 161.625 69.8624 158.976 69.6728C156.808 69.5176 154.817 69.4042 154.678 68.0575C154.541 66.7109 159.684 65.6278 161.625 64.8599C163.567 64.092 165.371 63.6712 165.371 63.6712C151.767 62.5559 124.505 61.7599 101.343 61.7895Z" />
@@ -472,7 +467,7 @@
         </section>
 
         <section id="meaz" class="smallsquare">
-            <div>
+            <div role="img" aria-label="Meaz">
                 <svg class="m-front" width="456" height="338" viewBox="0 0 456 338" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path class="mea-dg firstmbottom" d="M228 170V238L93 136V68L228 170Z" />
@@ -488,7 +483,7 @@
         </section>
 
         <section id="facfi" class="bigsquare">
-            <a class="work-title" href="work/factris-mvp.html">
+            <a class="work-title" href="/work/factris-mvp">
                 <h2>Factris MVP case study</h2>
                 <svg viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg" class="arrow-icon">
                     <g class="arrow-head">
@@ -500,7 +495,7 @@
                     </g>
                 </svg>
             </a>
-            <div class="facfi-cont">
+            <div class="facfi-cont" aria-hidden="true">
                 <div class="sfwindow">
                     <div class="sftopbar">
                         <div class="sffirst">
@@ -582,37 +577,37 @@
                                         d="M67.1775 8.25977C66.6255 7.84326 65.821 7.591 64.7639 7.50301C63.7773 7.43261 63.102 7.28008 62.732 7.04543C62.3621 6.81664 62.1741 6.48226 62.1741 6.04228C62.1741 5.82522 62.227 5.63163 62.3386 5.46737C62.4501 5.30311 62.5911 5.16819 62.7731 5.05672C62.9552 4.94526 63.1666 4.86313 63.4015 4.81034C63.6364 4.75754 63.883 4.72821 64.1414 4.72821C64.7992 4.72821 65.3277 4.89246 65.7388 5.22098C66.1029 5.5143 66.3319 5.91322 66.4141 6.41773L67.6943 5.83109C67.6356 5.6375 67.5651 5.43804 67.4712 5.24445C67.3067 4.9042 67.0718 4.60501 66.7664 4.34102C66.4611 4.0829 66.0852 3.86585 65.6389 3.70159C65.1867 3.53733 64.6641 3.4552 64.071 3.4552C63.6481 3.4552 63.2371 3.508 62.8495 3.61946C62.4619 3.73092 62.1095 3.89518 61.8042 4.11224C61.4929 4.32929 61.2463 4.59915 61.0642 4.9218C60.8822 5.24445 60.7882 5.61403 60.7882 6.04228V6.15374C60.7882 6.9457 61.0701 7.54407 61.628 7.95472C62.1859 8.36537 62.9904 8.61175 64.0357 8.68215C64.9342 8.74081 65.5861 8.88161 65.9854 9.09866C66.3847 9.31572 66.5844 9.67944 66.5844 10.1898C66.5844 10.665 66.3789 11.0287 65.9737 11.2927C65.5685 11.5567 65.0282 11.6857 64.3587 11.6857C63.5659 11.6857 62.9376 11.4746 62.4619 11.058C62.1565 10.7882 61.9392 10.4655 61.8042 10.0784L60.5122 10.6767C60.5416 10.753 60.5709 10.8351 60.6003 10.9114C60.7706 11.3044 61.0231 11.6564 61.3579 11.9673C61.6926 12.2782 62.1095 12.5246 62.6146 12.7124C63.1196 12.9001 63.7245 12.9939 64.4292 12.9939C64.9518 12.9939 65.4334 12.9294 65.8797 12.8004C66.326 12.6713 66.7019 12.4894 67.0072 12.243C67.3185 12.0025 67.5592 11.7033 67.7354 11.3572C67.9116 11.0111 67.9997 10.6181 67.9997 10.1839V10.0725C68.0114 9.28639 67.7354 8.67628 67.1775 8.25977Z"
                                         fill="" stroke="" stroke-width="0.3" />
                                 </svg>
-                                <a class="active" href="">
+                                <a class="active">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M2.7334 0.666626V15.3333H13.4001V3.7333L10.3334 0.666626H2.7334ZM10.0667 2.26662L11.8001 3.99996H10.0667V2.26662ZM12.0667 14H4.06673V1.99996H8.7334V5.33329H12.0667V14ZM10.7334 6.66663H5.40006V7.99996H10.7334V6.66663ZM5.40006 9.33329H8.7334V10.6666H5.40006V9.33329Z" />
                                     </svg>Invoices</a>
-                                <a href="">
+                                <a>
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M7.33333 2.33325H6C6 1.19992 6.86667 0.333252 8 0.333252C9.13333 0.333252 10 1.19992 10 2.33325H8.66667C8.66667 1.93325 8.4 1.66659 8 1.66659C7.6 1.66659 7.33333 1.93325 7.33333 2.33325ZM0 4.99994C0 3.86661 0.866667 2.99994 2 2.99994H14C15.1333 2.99994 16 3.86661 16 4.99994V12.3333C16 13.4666 15.1333 14.3333 14 14.3333H2C0.866667 14.3333 0 13.4666 0 12.3333V4.99994ZM14 12.9999C14.4 12.9999 14.6667 12.7333 14.6667 12.3333V4.99994C14.6667 4.59994 14.4 4.33327 14 4.33327H2C1.6 4.33327 1.33333 4.59994 1.33333 4.99994V12.3333C1.33333 12.7333 1.6 12.9999 2 12.9999H14ZM8 6.99994H12.6667V8.33327H8V6.99994ZM12.6667 9.66656H8V10.9999H12.6667V9.66656ZM4 8.99994H5.33333C6.06666 8.99994 6.66666 9.59994 6.66666 10.3333V11.6666H2.66666V10.3333C2.66666 9.59994 3.26666 8.99994 4 8.99994ZM4.66667 8.33323C5.40305 8.33323 6 7.73628 6 6.9999C6 6.26352 5.40305 5.66656 4.66667 5.66656C3.93029 5.66656 3.33334 6.26352 3.33334 6.9999C3.33334 7.73628 3.93029 8.33323 4.66667 8.33323Z" />
                                     </svg>Clients</a>
-                                <a href="">
+                                <a>
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M7.33333 16V13.9607C4.55733 13.652 2.34733 11.4427 2.03933 8.66667H0V7.33333H2.03933C2.34733 4.55733 4.55733 2.34733 7.33333 2.03933V0H8.66667V2.03933C11.4427 2.34733 13.6527 4.55733 13.9607 7.33333H16V8.66667H13.9607C13.6527 11.4427 11.4427 13.6513 8.66667 13.9607V16H7.33333ZM12.6667 8C12.6667 5.42733 10.5727 3.33333 8 3.33333C5.42733 3.33333 3.33333 5.42733 3.33333 8C3.33333 10.5733 5.42733 12.6667 8 12.6667C10.5727 12.6667 12.6667 10.5733 12.6667 8ZM8.00002 8.66622C9.10459 8.66622 10 7.77079 10 6.66622C10 5.56165 9.10459 4.66622 8.00002 4.66622C6.89545 4.66622 6.00002 5.56165 6.00002 6.66622C6.00002 7.77079 6.89545 8.66622 8.00002 8.66622ZM11.3334 9.69138C10.7127 11.058 9.45363 11.9996 8.00002 11.9996C6.54641 11.9996 5.28662 11.0588 4.66669 9.69138C5.04813 9.46606 5.47768 9.33289 5.93816 9.33289H10.0619C10.5224 9.33289 10.9519 9.46606 11.3334 9.69138Z" />
                                     </svg>Debtors</a>
-                                <a href="">
+                                <a>
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M1.33332 0.666748H7.99999V2.00008H2.66666L2.66665 5.56473L2.66666 7.33342H1.33332V0.666748ZM2.66665 5.56473L3.68441 4.64085L4.61442 5.48502L6.98223 3.33344L7.99999 4.25732L4.61442 7.33344L2.66665 5.56473ZM14.6667 2.66677H9.33332V4.0001H14.6667V2.66677ZM9.33332 4.66677H13.3333V6.0001H9.33332V4.66677ZM3.68441 11.9742L2.66665 12.8981V10.0001H7.99999V8.66677H1.33332V15.3334H2.66665V12.8981L4.61442 14.6668L7.99999 11.5907L6.98223 10.6668L4.61442 12.8184L3.68441 11.9742ZM14.6667 10.6668H9.33332V12.0001H14.6667V10.6668ZM9.33332 12.6668H13.3333V14.0001H9.33332V12.6668Z" />
                                     </svg>Tasks</a>
-                                <a href="">
+                                <a>
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M9.8766 0.666667L9.2086 0H6.6566L5.98927 0.666667H4.2666V1.33333H3.59993C2.8646 1.33333 2.2666 1.93133 2.2666 2.66667V14.6667C2.2666 15.402 2.8646 16 3.59993 16H12.2666C13.0019 16 13.5999 15.402 13.5999 14.6667V2.66667C13.5999 1.93133 13.0019 1.33333 12.2666 1.33333H11.5999V0.666667H9.8766ZM5.59994 2H6.54127L7.2086 1.33333H8.6566L9.3246 2H10.2666V3.33333H5.59994V2ZM12.2666 14.6667V2.66667H11.5999V4.66667H4.2666V2.66667H3.59994V14.6667H12.2666ZM7.93329 2.66675C8.11738 2.66675 8.26662 2.51751 8.26662 2.33341C8.26662 2.14932 8.11738 2.00008 7.93329 2.00008C7.74919 2.00008 7.59996 2.14932 7.59996 2.33341C7.59996 2.51751 7.74919 2.66675 7.93329 2.66675ZM4.26662 5.33342H5.59996V12.6667H11.6V14.0001H4.26662V5.33342Z" />
                                     </svg>Notes</a>
-                                <a href="">
+                                <a>
                                     <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -637,19 +632,19 @@
                                     </svg>Users</a>
                             </nav>
                         </aside>
-                        <main>
+                        <div class="fac-main">
                             <p class="famobh1">Invoices</p>
                             <nav>
-                                <a class="" href="">Unfunded</a>
-                                <a class="pending active" href="">Pending<span>13</span></a>
-                                <a class="rejected" href="">Rejected<span>2</span></a>
-                                <a class="approved" href="">Approved<span>24</span></a>
-                                <a href="">Funded</a>
-                                <a href="">Overdue</a>
-                                <a href="">Recourse</a>
-                                <a class="paid" href="">Paid<span>23</span></a>
-                                <a href="">Closed</a>
-                                <a href="">All</a>
+                                <a class="">Unfunded</a>
+                                <a class="pending active">Pending<span>13</span></a>
+                                <a class="rejected">Rejected<span>2</span></a>
+                                <a class="approved">Approved<span>24</span></a>
+                                <a>Funded</a>
+                                <a>Overdue</a>
+                                <a>Recourse</a>
+                                <a class="paid">Paid<span>23</span></a>
+                                <a>Closed</a>
+                                <a>All</a>
                             </nav>
                             <section class="fac-filters">
                                 <div class="filter-selection">
@@ -871,14 +866,14 @@
                                     <td></td>
                                 </tr>
                             </table>
-                        </main>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="teca" class="verticalrect">
-            <div class="tecawrap tecstart">
+            <div class="tecawrap tecstart" role="img" aria-label="Teca: agile creative technology agency website">
                 <div class="tecanav">
                     <p>pH</p>
                     <ul>
@@ -895,7 +890,7 @@
                         <span>technology</span>
                         <span>agency</span>
                     </p>
-                    <button class="teca-btn" href="#">
+                    <button class="teca-btn">
                         <span class="teca-btn-text">teletransport to case studies</span>
                         <svg class="teca-btn-icon bigger-projects" width="16" height="16" viewBox="0 0 16 16"
                             fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -909,7 +904,7 @@
         </section>
 
         <section id="cff" class="smallsquare">
-            <div>
+            <div role="img" aria-label="CFF">
                 <div class="cffCircles">
                     <div class="cffCircles">
                         <div class="cffCircles">
@@ -940,7 +935,7 @@
         </section>
 
         <section id="f-desys" class="horizontalrect">
-            <div class="palette destab active">
+            <div class="palette destab active" role="img" aria-label="Factris design system: colour palette">
                 <div class="marque">
                     <p>Neutral</p>
                     <div class="color-type">
@@ -1160,7 +1155,7 @@
                     </div>
                 </div>
             </div>
-            <div class="typography destab">
+            <div class="typography destab" role="img" aria-label="Factris design system: typography">
                 <ul class="titles">
                     <li>
                         <span class="ty-nam">name</span>
@@ -1323,7 +1318,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="buttons destab">
+            <div class="buttons destab" role="img" aria-label="Factris design system: buttons">
                 <div class="marque">
                     <div class="legend">
                         <p></p>
@@ -2105,7 +2100,7 @@
             </div>
             <div class="tabs-container">
                 <div class="tabs">
-                    <input class="sr-only" id="palette" type="radio" name="tabs" value="palette" />
+                    <input class="sr-only" id="palette" type="radio" name="tabs" value="palette" checked />
                     <label for="palette">Palette</label>
                     <input class="sr-only" id="typography" type="radio" name="tabs" value="typography" />
                     <label for="typography">Typography</label>
@@ -2123,7 +2118,7 @@
         </section>
 
         <section id="vlak" class="smallsquare">
-            <div>
+            <div role="img" aria-label="Vlak">
                 <div></div>
                 <div></div>
             </div>
@@ -2131,14 +2126,14 @@
     </main>
 
     <div id="contactwrap">
-        <section id="contact">
+        <section id="contact" aria-label="Contact">
             <div id="messageContainer">
                 <div class="chat">
                     <span class="chat-ric-name">Riccardo</span>
                     <p>Hi, how are you doing?</p>
                     <p>Write to me at <a href="mailto:hi@rccpll.com">hi@rccpll.com</a></p>
-                    <button title="Copy" class="copy-btn">Copy email
-                        <span>Copied!</span>
+                    <button class="copy-btn">Copy email
+                        <span role="status"></span>
                     </button>
                     <p>or drop me a message here!</p>
                     <span class="time">1 min ago</span>
@@ -2166,15 +2161,17 @@
                     <button id="chatTryAgain">Try again</button>
 
                     <p>or write to me at <a href="mailto:hi@rccpll.com">hi@rccpll.com</a></p>
-                    <button title="Copy" class="copy-btn">Copy email
-                        <span>Copied!</span>
+                    <button class="copy-btn">Copy email
+                        <span role="status"></span>
                     </button>
                     <span class="time">Now</span>
                 </div>
             </div>
 
+            <p id="chatStatus" class="sr-only" role="status"></p>
             <form>
-                <textarea id="prompt" name="prompt" placeholder="Message" rows="1" autocomplete="off"></textarea>
+                <label for="prompt" class="sr-only">Message</label>
+                <textarea id="prompt" name="prompt" placeholder="Message" rows="1" maxlength="2000" autocomplete="off"></textarea>
                 <button id="sendButton" disabled>Send</button>
             </form>
 
