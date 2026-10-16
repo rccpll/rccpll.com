@@ -15,15 +15,6 @@ body, html, input, textarea {font-family: ui-sans-serif,system-ui,-apple-system,
 	--gap:1rem;
 	--half-width:calc((var(--full-width) / 2) - (0.5 * var(--gap)));
 	--quarter-width:calc((var(--half-width) / 2) - (0.5 * var(--gap)));
-	--color-text:#1a1a1a;
-	--color-bg:#ffffff;
-	--color-accent:#026bff;
-	--color-gray:#c1baba;
-	--color-gray-dark:#353540;
-	--color-gray-light:#e1e5ea;
-	--color-bg-section:#f3f3f5;
-	--transition-fast:0.2s ease;
-	--transition-normal:0.3s ease;
 }
 body > header, body > main {display:grid;grid-template: repeat(2, auto) / 1fr 1fr;max-width:var(--full-width);margin:6.9rem auto;grid-gap: var(--gap);}
 

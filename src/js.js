@@ -520,73 +520,13 @@ prompt.addEventListener('input', () => {
   prompt.style.height = `${prompt.scrollHeight + 2}px`;
 });
 
-// STATE BUTTONS
+// STATE BUTTONS (dark mode lives in theme.js)
 
 const mainMain = document.querySelector('body > main');
 const clrBtn = document.querySelector('#clrBtn');
-const darkBtn = document.querySelector('#darkBtn');
 
 clrBtn.addEventListener('click', () => {
   const on = clrBtn.classList.toggle('clr');
   mainMain.classList.toggle('clr');
   clrBtn.setAttribute('aria-pressed', String(on));
-});
-
-function switcher(prefName, offLabel, onLabel, suffix, defaultValue, apply) {
-  let enabled;
-  function sync() {
-    apply(enabled);
-    try {
-      if (localStorage.getItem(prefName) || enabled !== defaultValue) {
-        localStorage.setItem(prefName, enabled);
-      }
-    } catch (e) {}
-  }
-
-  darkBtn.addEventListener('click', () => {
-    enabled = +!enabled;
-    sync();
-  });
-  try {
-    enabled = localStorage.getItem(prefName);
-  } catch (e) {}
-  enabled = +(enabled || defaultValue);
-  sync();
-  return sync;
-}
-
-let darkModeDefault = 0;
-try {
-  darkModeDefault = matchMedia('(prefers-color-scheme: dark)').matches;
-} catch (e) {}
-
-const colorSchemeMeta = document.querySelector('meta[name=color-scheme]');
-let stylesheetElements = document.querySelectorAll(
-  'link[data-dark]'
-);
-
-const syncDarkMode = switcher(
-  'dark',
-  'light',
-  'dark',
-  ' theme',
-  darkModeDefault,
-  (enabled) => {
-    colorSchemeMeta.content = enabled ? 'dark' : 'light';
-    darkBtn.setAttribute('aria-pressed', String(!!enabled));
-    stylesheetElements.forEach((element) => {
-      element.media = enabled ? 'screen' : 'not all';
-    });
-  }
-);
-
-// If anything is in the source after this script, handle it.
-document.addEventListener('DOMContentLoaded', () => {
-  stylesheetElements = [
-    ...stylesheetElements,
-    ...document.querySelectorAll(
-      'link[data-dark]'
-    ),
-  ];
-  syncDarkMode();
 });
