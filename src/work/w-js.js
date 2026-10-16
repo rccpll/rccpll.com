@@ -7,6 +7,7 @@ if (document.querySelector('.filter-btn')) {
 
   fltBtn.addEventListener('click', () => {
     fltRow.classList.toggle('row-act-fil');
+    fltBtn.setAttribute('aria-expanded', String(fltRow.classList.contains('row-act-fil')));
     fltAll.forEach((label) => {
       label.classList.remove('act-fil');
     });

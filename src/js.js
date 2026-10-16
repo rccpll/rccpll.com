@@ -1,4 +1,13 @@
 /* eslint-disable no-empty */
+const scrollBehavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+
+// Demo mockups are pictures for assistive tech (role="img" / aria-hidden):
+// keep their buttons, links and inputs out of the keyboard tab order.
+document.querySelectorAll('main [role="img"], main [aria-hidden="true"]').forEach((demo) => {
+  demo.querySelectorAll('a, button, input, textarea, select').forEach((el) => {
+    el.tabIndex = -1;
+  });
+});
 // THE EYE
 const theEye = document.querySelector('#theeye');
 const pupil = document.querySelector('.pupil');
@@ -228,7 +237,7 @@ tecaSect.addEventListener('mouseleave', () => {
   tecaWrap.classList.add('tecstart');
   tecaWrap.scrollTo({
     top: 0,
-    behavior: 'smooth',
+    behavior: scrollBehavior,
   });
 });
 
@@ -372,15 +381,16 @@ const firstChat = contactChat.querySelector('.firstChat');
 const secondChat = contactChat.querySelector('.secondChat');
 const handleSuccess = contactChat.querySelector('.handleSuccess');
 const handleError = contactChat.querySelector('.handleError');
+const chatStatus = document.querySelector('#chatStatus');
 const messageObject = {
   contact: null,
   message: null,
 };
 
 // on input focus display first question
-prompt.addEventListener('click', () => {
+prompt.addEventListener('focus', () => {
   firstChat.classList.remove('hide');
-  prompt.scrollIntoView({ behavior: 'smooth' });
+  prompt.scrollIntoView({ behavior: scrollBehavior });
 });
 
 // on "submit" take the text and add it to the conversation
@@ -412,10 +422,11 @@ sendButton.addEventListener('click', (e) => {
     sendButton.disabled = false;
     if (secondChat.classList.contains('hide')) {
       addAnswer(secondChat, message);
-      prompt.scrollIntoView({ behavior: 'smooth' });
+      prompt.scrollIntoView({ behavior: scrollBehavior });
       setTimeout(() => {
         secondChat.classList.remove('hide');
-        prompt.scrollIntoView({ behavior: 'smooth' });
+        chatStatus.textContent = 'Thanks! Now leave an email or phone number and press Send.';
+        prompt.scrollIntoView({ behavior: scrollBehavior });
       }, 1000);
       messageObject.message = message;
       prompt.value = '';
@@ -448,21 +459,30 @@ function sendMessage() {
       if (data.success) {
         // Message sent successfully
         handleSuccess.classList.remove('hide');
-        prompt.scrollIntoView({ behavior: 'smooth' });
+        chatStatus.textContent = 'Message sent. You will hear from me soon.';
+        chatSendAgain.focus();
+        prompt.scrollIntoView({ behavior: scrollBehavior });
       } else {
         // Handle the error
-        handleError.classList.remove('hide');
-        prompt.scrollIntoView({ behavior: 'smooth' });
+        showChatError();
+        prompt.scrollIntoView({ behavior: scrollBehavior });
       }
     })
     .catch((error) => {
       // Catch any exceptions that may occur
-      handleError.classList.remove('hide');
-      prompt.scrollIntoView({ behavior: 'smooth' });
+      showChatError();
+      prompt.scrollIntoView({ behavior: scrollBehavior });
     });
 }
 
+function showChatError() {
+  handleError.classList.remove('hide');
+  chatStatus.textContent = 'Sorry, your message did not go through. Try again or write to hi@rccpll.com.';
+  chatTryAgain.focus();
+}
+
 const chatSendAgain = document.querySelector('#chatSendAgain');
+const chatTryAgain = document.querySelector('#chatTryAgain');
 chatSendAgain.addEventListener('click', sendAnother);
 
 function sendAnother() {
@@ -473,6 +493,7 @@ function sendAnother() {
     answer.remove();
   });
   prompt.disabled = false;
+  chatStatus.textContent = '';
   prompt.focus();
 }
 
@@ -481,9 +502,11 @@ function copyEmail(event) {
   navigator.clipboard.writeText(email);
   const copyButton = event.currentTarget;
   const copyMessage = copyButton.querySelector('span');
+  copyMessage.textContent = 'Copied!';
   copyMessage.style.opacity = '0.8';
   setTimeout(() => {
     copyMessage.style.opacity = '0';
+    copyMessage.textContent = '';
   }, 2000);
 }
 
@@ -492,7 +515,6 @@ copyButtons.forEach((button) => {
   button.addEventListener('click', copyEmail);
 });
 
-const chatTryAgain = document.querySelector('#chatTryAgain');
 chatTryAgain.addEventListener('click', sendMessage);
 
 prompt.addEventListener('input', () => {
@@ -507,8 +529,9 @@ const clrBtn = document.querySelector('#clrBtn');
 const darkBtn = document.querySelector('#darkBtn');
 
 clrBtn.addEventListener('click', () => {
-  clrBtn.classList.toggle('clr');
+  const on = clrBtn.classList.toggle('clr');
   mainMain.classList.toggle('clr');
+  clrBtn.setAttribute('aria-pressed', String(on));
 });
 
 function switcher(prefName, offLabel, onLabel, suffix, defaultValue, apply) {
@@ -552,6 +575,7 @@ const syncDarkMode = switcher(
   darkModeDefault,
   (enabled) => {
     colorSchemeMeta.content = enabled ? 'dark' : 'light';
+    darkBtn.setAttribute('aria-pressed', String(!!enabled));
     stylesheetElements.forEach((element) => {
       element.media = enabled ? 'screen' : 'not all';
     });
