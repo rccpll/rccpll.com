@@ -1,4 +1,10 @@
 @charset "UTF-8";
+/* Fonts: self-hosted subsets of Work Sans and Eczar (SIL Open Font License), downloaded from Google Fonts.
+   work-sans.woff2 covers A-Z a-z 0-9 and . , : ; / - _ # % & ( ) + ! ? ' " € ▲   eczar.woff2 covers A-Z a-z and space.
+   Characters outside these sets fall back to the next font in the stack. */
+@font-face {font-family:'Work Sans';src:url(fonts/work-sans.woff2) format('woff2');font-weight:400 600;font-display:swap;}
+@font-face {font-family:'Eczar';src:url(fonts/eczar.woff2) format('woff2');font-weight:500 600;font-display:swap;}
+
 
 html {font-size:100%;line-height:1.3;scroll-behavior:smooth;background:#fefefe;background: radial-gradient(circle, rgba(254,254,254,1) 74%, rgba(249,249,249,1) 92%);color:#000;}
 body {margin:0 1rem;}

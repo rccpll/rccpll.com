@@ -12,16 +12,6 @@ document.querySelectorAll('main [role="img"], main [aria-hidden="true"]').forEac
 const theEye = document.querySelector('#theeye');
 const pupil = document.querySelector('.pupil');
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-function throttle(callback, delay) {
-  let lastExecution = 0;
-  return function (...args) {
-    const now = new Date().getTime();
-    if (now - lastExecution >= delay) {
-      lastExecution = now;
-      callback(...args);
-    }
-  };
-}
 function updatePupilPosition(x, y) {
   const xPercentage = `${x}%`;
   const yPercentage = `${y}%`;
@@ -31,34 +21,42 @@ function updatePupilPosition(x, y) {
 }
 
 if (!isSafari) {
-  let mouseEnterTheEye = false;
-  let mouseX = 0;
-  let mouseY = 0;
+  let insideEye = false;
+  let lastEvent = null;
+  let frame = 0;
+
+  // One listener for the whole page, at most one pupil update per frame
+  document.addEventListener(
+    'mousemove',
+    (e) => {
+      lastEvent = e;
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        if (insideEye) {
+          const rect = theEye.getBoundingClientRect();
+          updatePupilPosition(
+            ((lastEvent.clientX - rect.left) * 100) / rect.width,
+            ((lastEvent.clientY - rect.top) * 100) / rect.height
+          );
+        } else {
+          updatePupilPosition(
+            (lastEvent.clientX * 100) / window.innerWidth,
+            (lastEvent.clientY * 100) / window.innerHeight
+          );
+        }
+      });
+    },
+    { passive: true }
+  );
 
   theEye.addEventListener('mouseenter', () => {
-    mouseEnterTheEye = true;
-    const rect = theEye.getBoundingClientRect();
-    theEye.addEventListener(
-      'mousemove',
-      throttle((ev) => {
-        const x = ((ev.clientX - rect.left) * 100) / rect.width;
-        const y = ((ev.clientY - rect.top) * 100) / rect.height;
-        updatePupilPosition(x, y);
-      }, 10)
-    );
+    insideEye = true;
   });
 
   theEye.addEventListener('mouseleave', () => {
-    mouseEnterTheEye = false;
+    insideEye = false;
   });
-
-  document.onmousemove = throttle((e) => {
-    if (mouseEnterTheEye === false) {
-      mouseX = (e.clientX * 100) / window.innerWidth;
-      mouseY = (e.clientY * 100) / window.innerHeight;
-      updatePupilPosition(mouseX, mouseY);
-    }
-  }, 8);
 
   document.addEventListener('mouseleave', (e) => {
     if (
