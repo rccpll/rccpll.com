@@ -15,6 +15,7 @@ async function copyDir(src, dest) {
   await fs.mkdir(dest, { recursive: true });
   const entries = await fs.readdir(src, { withFileTypes: true });
   for (const e of entries) {
+    if (e.name.startsWith(".") && e.name !== ".well-known") continue; // .DS_Store etc.
     const from = path.join(src, e.name);
     const to = path.join(dest, e.name);
     if (e.isDirectory()) await copyDir(from, to);
@@ -61,6 +62,7 @@ for (const file of cssFiles) {
     });
   } catch (e) {
     // If minification fails, just copy the file
+    console.warn(`Could not minify ${file}, copying as-is:`, e.message);
     await fs.copyFile(srcPath, outPath);
   }
 }
@@ -77,6 +79,7 @@ for (const file of jsFiles) {
     });
   } catch (e) {
     // If minification fails, just copy the file
+    console.warn(`Could not minify ${file}, copying as-is:`, e.message);
     await fs.copyFile(srcPath, outPath);
   }
 }

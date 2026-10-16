@@ -388,6 +388,19 @@ prompt.addEventListener('input', () => {
   sendButton.disabled = prompt.value.trim() === '';
 });
 
+// add the visitor's text as a chat bubble (textContent, never HTML)
+function addAnswer(before, text) {
+  const bubble = document.createElement('div');
+  bubble.className = 'chat answer';
+  const p = document.createElement('p');
+  p.textContent = text;
+  const time = document.createElement('span');
+  time.className = 'time';
+  time.textContent = 'Now';
+  bubble.append(p, time);
+  before.before(bubble);
+}
+
 sendButton.addEventListener('click', (e) => {
   e.preventDefault();
   prompt.style.height = 'auto';
@@ -398,12 +411,7 @@ sendButton.addEventListener('click', (e) => {
   } else {
     sendButton.disabled = false;
     if (secondChat.classList.contains('hide')) {
-      const htmlMessage = `
-                          <div class="chat answer">
-                            <p>${message.replace(/\n/g, '<br>')}</p>
-                            <span class="time">Now</span>
-                          </div>`;
-      secondChat.insertAdjacentHTML('beforeBegin', htmlMessage);
+      addAnswer(secondChat, message);
       prompt.scrollIntoView({ behavior: 'smooth' });
       setTimeout(() => {
         secondChat.classList.remove('hide');
@@ -414,12 +422,7 @@ sendButton.addEventListener('click', (e) => {
       sendButton.disabled = true;
       prompt.focus();
     } else {
-      const htmlMessage = `
-                                  <div class="chat answer">
-                                    <p>${message.replace(/\n/g, '<br>')}</p>
-                                    <span class="time">Now</span>
-                                  </div>`;
-      handleSuccess.insertAdjacentHTML('beforeBegin', htmlMessage);
+      addAnswer(handleSuccess, message);
       messageObject.contact = message;
       sendMessage();
     }
@@ -432,11 +435,6 @@ function sendMessage() {
   sendButton.disabled = true;
   handleError.classList.add('hide');
   handleSuccess.classList.add('hide');
-
-  // thinking
-
-  console.log(messageObject.message);
-  console.log(messageObject.contact);
 
   fetch('/api/chat', {
     method: 'POST',

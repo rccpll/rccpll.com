@@ -780,7 +780,7 @@ svg.m-top .firstmsecret {opacity:1}
 #contact .chat {margin-bottom:1rem;max-width:65%;height:auto;transform:scale(1);transition:transform 0.3s ease, opacity 0.3s ease;}
 #contact .chat.hide {display:block;transform:scale(0);height:0;margin-bottom:0;}
 #contact .answer {align-self:flex-end;animation:0.3s ease-in showUp;}
-#contact .answer p{color:#fff;background:#000;border:1px solid #000;}
+#contact .answer p{color:#fff;background:#000;border:1px solid #000;white-space:pre-line;}
 @keyframes showUp {from {transform:scale(0);} to {transform:scale(1);}}
 #contact span {display:block;font-size:0.75rem;color:#8e8e8e;padding-left:1rem;line-height:1;position:relative;}
 #contact span.time {margin-top:0.25rem;}
