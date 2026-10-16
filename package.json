@@ -4,15 +4,11 @@
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
-    "dev": "npm run build && concurrently \"npm run watch\" \"npx wrangler pages dev dist\"",
-    "watch": "nodemon --watch src --ext html,css,js --exec \"node build.mjs\"",
+    "watch": "node --watch-path=src build.mjs",
+    "dev": "node build.mjs && (trap 'kill 0' EXIT; node --watch-path=src build.mjs & wrangler pages dev dist)",
     "convert-images": "node convert-images.mjs"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2",
-    "esbuild": "^0.27.2",
-    "html-minifier-terser": "^7.2.0",
-    "nodemon": "^3.1.9",
     "sharp": "^0.33.2",
     "wrangler": "^4.59.2"
   }

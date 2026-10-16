@@ -1,8 +1,9 @@
+// Build: copy src/ to dist/, then give CSS, JS, images and fonts content-hashed
+// names (css.0b4ef038.css) and rewrite references to them. Files ship as written:
+// Cloudflare compresses them, so minifying would save only ~1KB per file.
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
-import * as esbuild from "esbuild";
-import { minify as minifyHtml } from "html-minifier-terser";
 
 const SRC = "src";
 const OUT = "dist";
@@ -45,45 +46,6 @@ function toPosix(p) {
 await rmrf(OUT);
 await copyDir(SRC, OUT);
 
-// Minify CSS and JS files
-const cssFiles = ['css.css', 'dark.css', 'work/w-css.css'];
-const jsFiles = ['js.js', 'work/w-js.js'];
-
-for (const file of cssFiles) {
-  const srcPath = path.join(SRC, file);
-  const outPath = path.join(OUT, file);
-  try {
-    await esbuild.build({
-      entryPoints: [srcPath],
-      bundle: false,
-      minify: true,
-      outfile: outPath,
-      loader: { '.css': 'css' },
-    });
-  } catch (e) {
-    // If minification fails, just copy the file
-    console.warn(`Could not minify ${file}, copying as-is:`, e.message);
-    await fs.copyFile(srcPath, outPath);
-  }
-}
-
-for (const file of jsFiles) {
-  const srcPath = path.join(SRC, file);
-  const outPath = path.join(OUT, file);
-  try {
-    await esbuild.build({
-      entryPoints: [srcPath],
-      bundle: false,
-      minify: true,
-      outfile: outPath,
-    });
-  } catch (e) {
-    // If minification fails, just copy the file
-    console.warn(`Could not minify ${file}, copying as-is:`, e.message);
-    await fs.copyFile(srcPath, outPath);
-  }
-}
-
 // Fingerprint assets in two rounds: images and fonts first, so that when CSS
 // references them the CSS content (and so its hash) changes too. Then CSS/JS.
 // Favicons are left alone so their URLs stay stable.
@@ -125,16 +87,6 @@ async function rewrite(exts) {
       }
       // Covers "foo.css", "/foo.css" and "../foo.css"
       content = content.split(oldRel).join(newRel);
-    }
-
-    // Minify HTML files
-    if (file.endsWith(".html")) {
-      content = await minifyHtml(content, {
-        collapseWhitespace: true,
-        removeComments: true,
-        minifyCSS: true,
-        minifyJS: true,
-      });
     }
 
     await fs.writeFile(file, content);
