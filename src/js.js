@@ -543,7 +543,7 @@ try {
 
 const colorSchemeMeta = document.querySelector('meta[name=color-scheme]');
 let stylesheetElements = document.querySelectorAll(
-  '[media="screen and (prefers-color-scheme: dark)"]'
+  'link[data-dark]'
 );
 
 const syncDarkMode = switcher(
@@ -565,7 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
   stylesheetElements = [
     ...stylesheetElements,
     ...document.querySelectorAll(
-      '[media="screen and (prefers-color-scheme: dark)"]'
+      'link[data-dark]'
     ),
   ];
   syncDarkMode();

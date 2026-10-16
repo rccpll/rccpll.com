@@ -1,88 +1,90 @@
 /* eslint-disable no-empty */
-// FACFI
-const fltBtn = document.querySelector('.filter-btn');
-const fltRow = document.querySelector('.fac-filters');
-const fltAll = document.querySelectorAll('.filter-selection > div label');
+// FACFI (only on pages with the invoice table demo)
+if (document.querySelector('.filter-btn')) {
+  const fltBtn = document.querySelector('.filter-btn');
+  const fltRow = document.querySelector('.fac-filters');
+  const fltAll = document.querySelectorAll('.filter-selection > div label');
 
-fltBtn.addEventListener('click', () => {
-  fltRow.classList.toggle('row-act-fil');
-  fltAll.forEach((label) => {
-    label.classList.remove('act-fil');
-  });
-});
-
-function toggleActFilClass(labelElement) {
-  fltAll.forEach((label) => {
-    label.classList.remove('act-fil');
-  });
-  labelElement.classList.add('act-fil');
-}
-
-fltAll.forEach((label) => {
-  label.addEventListener('click', () => {
-    toggleActFilClass(label);
-  });
-});
-
-const faTableFund = document.getElementById('faTableFund');
-const actBtnRow = document.querySelector('.actBtnRow');
-const faCheckboxes = faTableFund.querySelectorAll('.table-select input');
-const totalAmountSpan = document.querySelector('.totalAmountSpan');
-const totalRowsSpan = document.querySelector('.totalRowsSpan');
-const faInvPlur = document.querySelector('.faInvPlur');
-const faSelectAllCheckbox = faTableFund.querySelector(
-  '.table-header-row input'
-);
-let totalAmount = 0;
-
-function updateTotals() {
-  totalAmount = 0;
-  let selectedRowCount = 0;
-
-  faCheckboxes.forEach((checkbox) => {
-    const amount = parseFloat(checkbox.getAttribute('data-amount'));
-
-    if (checkbox.checked) {
-      totalAmount += amount;
-      selectedRowCount += 1;
-    }
+  fltBtn.addEventListener('click', () => {
+    fltRow.classList.toggle('row-act-fil');
+    fltAll.forEach((label) => {
+      label.classList.remove('act-fil');
+    });
   });
 
-  const formattedTotal = totalAmount.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-    useGrouping: true,
-  });
-
-  totalAmountSpan.textContent = formattedTotal;
-  totalRowsSpan.textContent = selectedRowCount;
-
-  if (selectedRowCount > 1) {
-    faInvPlur.style.display = 'inline-block';
-  } else {
-    faInvPlur.style.display = 'none';
+  function toggleActFilClass(labelElement) {
+    fltAll.forEach((label) => {
+      label.classList.remove('act-fil');
+    });
+    labelElement.classList.add('act-fil');
   }
 
-  if (selectedRowCount > 0 || faSelectAllCheckbox.checked) {
-    actBtnRow.style.display = 'block';
-  } else {
-    actBtnRow.style.display = 'none';
+  fltAll.forEach((label) => {
+    label.addEventListener('click', () => {
+      toggleActFilClass(label);
+    });
+  });
+
+  const faTableFund = document.getElementById('faTableFund');
+  const actBtnRow = document.querySelector('.actBtnRow');
+  const faCheckboxes = faTableFund.querySelectorAll('.table-select input');
+  const totalAmountSpan = document.querySelector('.totalAmountSpan');
+  const totalRowsSpan = document.querySelector('.totalRowsSpan');
+  const faInvPlur = document.querySelector('.faInvPlur');
+  const faSelectAllCheckbox = faTableFund.querySelector(
+    '.table-header-row input'
+  );
+  let totalAmount = 0;
+
+  function updateTotals() {
     totalAmount = 0;
+    let selectedRowCount = 0;
+
+    faCheckboxes.forEach((checkbox) => {
+      const amount = parseFloat(checkbox.getAttribute('data-amount'));
+
+      if (checkbox.checked) {
+        totalAmount += amount;
+        selectedRowCount += 1;
+      }
+    });
+
+    const formattedTotal = totalAmount.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+      useGrouping: true,
+    });
+
+    totalAmountSpan.textContent = formattedTotal;
+    totalRowsSpan.textContent = selectedRowCount;
+
+    if (selectedRowCount > 1) {
+      faInvPlur.style.display = 'inline-block';
+    } else {
+      faInvPlur.style.display = 'none';
+    }
+
+    if (selectedRowCount > 0 || faSelectAllCheckbox.checked) {
+      actBtnRow.style.display = 'block';
+    } else {
+      actBtnRow.style.display = 'none';
+      totalAmount = 0;
+    }
   }
+
+  faCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', updateTotals);
+  });
+
+  faSelectAllCheckbox.addEventListener('change', () => {
+    faCheckboxes.forEach((checkbox) => {
+      checkbox.checked = faSelectAllCheckbox.checked;
+    });
+    updateTotals();
+  });
 }
 
-faCheckboxes.forEach((checkbox) => {
-  checkbox.addEventListener('change', updateTotals);
-});
-
-faSelectAllCheckbox.addEventListener('change', () => {
-  faCheckboxes.forEach((checkbox) => {
-    checkbox.checked = faSelectAllCheckbox.checked;
-  });
-  updateTotals();
-});
-
-/** nifht mode */
+/** night mode */
 function switcher(prefName, offLabel, onLabel, suffix, defaultValue, apply) {
   let enabled;
   function sync() {
@@ -108,7 +110,7 @@ try {
 } catch (e) {}
 
 let stylesheetElements = document.querySelectorAll(
-  '[media="screen and (prefers-color-scheme: dark)"]'
+  'link[data-dark]'
 );
 
 const syncDarkMode = switcher(
@@ -132,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
   stylesheetElements = [
     ...stylesheetElements,
     ...document.querySelectorAll(
-      '[media="screen and (prefers-color-scheme: dark)"]'
+      'link[data-dark]'
     ),
   ];
   syncDarkMode();
