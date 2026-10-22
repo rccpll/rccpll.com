@@ -67,8 +67,10 @@ if (document.querySelector('.filter-btn')) {
 
     if (selectedRowCount > 0 || faSelectAllCheckbox.checked) {
       actBtnRow.style.display = 'block';
+      actBtnRow.classList.add('is-shown');
     } else {
       actBtnRow.style.display = 'none';
+      actBtnRow.classList.remove('is-shown');
       totalAmount = 0;
     }
   }

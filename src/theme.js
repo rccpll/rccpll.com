@@ -25,11 +25,23 @@
     if (button) button.setAttribute('aria-pressed', String(dark));
   }
 
+  // Switching after first paint would start every colour transition on the
+  // page at once, so the switch happens with transitions off for that frame
+  // (css.css / w-css.css: html[data-theme-switching]).
+  function applyInstantly() {
+    const root = document.documentElement;
+    root.setAttribute('data-theme-switching', '');
+    apply();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => root.removeAttribute('data-theme-switching'));
+    });
+  }
+
   // Until the visitor picks a theme, follow OS changes live
   osDark.addEventListener('change', (e) => {
     if (saved !== null) return;
     dark = e.matches;
-    apply();
+    applyInstantly();
   });
 
   apply();
@@ -44,7 +56,7 @@
       try {
         localStorage.setItem(STORAGE_KEY, saved);
       } catch (e) {}
-      apply();
+      applyInstantly();
     });
   });
 })();
