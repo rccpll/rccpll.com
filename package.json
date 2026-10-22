@@ -9,7 +9,7 @@
     "convert-images": "node convert-images.mjs"
   },
   "devDependencies": {
-    "sharp": "^0.33.2",
-    "wrangler": "^4.59.2"
+    "sharp": "^0.35.5",
+    "wrangler": "^4.152.0"
   }
 }
