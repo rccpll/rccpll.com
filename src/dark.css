@@ -1,11 +1,9 @@
 @charset "UTF-8";
 
 html, #work section{background:#222;color:#eee;border:none;}
-#work p, #btn-available, header > nav a, nav a.rccpll svg, nav a.rccpll  {color:#bbb;opacity:1;}
-header > nav a:hover, #btn-available:hover {color:#eee;}
-#btn-available:before {box-shadow: 0 0 0 1px #444;}
-#btn-available .arrow-icon path {stroke:#bbb;}
-#btn-available:hover .arrow-icon path, .rccpll .arrow-icon path, .rccpll:hover .arrow-icon path {stroke:#eee;}
+#work p, header > nav a, nav a.rccpll svg, nav a.rccpll  {color:#bbb;opacity:1;}
+@media (hover: hover) {header > nav a:hover {color:#eee;}}
+.rccpll .arrow-icon path, .rccpll:hover .arrow-icon path {stroke:#eee;}
 nav a.rccpll:before {box-shadow: 0 0 0 1px #616161;}
 
 
@@ -67,14 +65,14 @@ body > main > section {background:#333;border:1px solid #444;}
 #cff > div  > .cffCircles > .cffCircles > .cffCircles > .cffCircles {background-color:#888;}
 #cff:hover svg .cff-f-one, #cff:hover svg .cff-f-two, .clr #cff svg .cff-f-one, .clr #cff svg .cff-f-two {stroke:#eee;}
 
-#vlak {background-color:#121212;transition:0.5s all ease 0.3s;}
-#vlak:hover{border-color:#121212;transition:0.5s all ease;}
+#vlak {background-color:#121212;transition:background-color 0.5s ease 0.3s, border-color 0.5s ease 0.3s;}
+#vlak:hover{border-color:#121212;transition:background-color 0.5s ease, border-color 0.5s ease;}
 #vlak > div {filter:invert(0.85);transition: 0.5s filter ease 0.15s, 0.5s height ease 0.3s, 0.5s width ease 0.3s, 0.5s transform ease 0.3s;}
 #vlak:hover > div {filter:invert(0);transition: 0.5s filter ease 0.2s, height ease 0.5s, width ease 0.5s, transform ease 0.5s;}
 
-#f-desys:before, #f-desys:after {background:#333;box-shadow: 0px 0px 10px 20px #333;transition:0.3s all ease;}
+#f-desys:before, #f-desys:after {background:#333;box-shadow: 0px 0px 10px 20px #333;transition:background-color 0.3s ease, box-shadow 0.3s ease;}
 #f-desys:hover:before, #f-desys:hover:after, .clr #f-desys:before, .clr #f-desys:after {background:#222;box-shadow: 0px 0px 10px 20px #222;}
-#f-desys .destab {background:#333;transition:0.3s all ease;}
+#f-desys .destab {background:#333;transition:background-color 0.3s ease;}
 #f-desys:hover .destab, .clr #f-desys .destab {background:#222;}
 #f-desys .typography ul.titles li {box-shadow: 1px -6px 0px 11px #333, 0px 7px 6px 0px #333;background:#333;}
 #f-desys:hover .typography ul.titles li, .clr #f-desys .typography ul.titles li {box-shadow: 1px -6px 0px 11px #222, 0px 7px 6px 0px #222;background:#222;}
@@ -105,7 +103,7 @@ body > main > section {background:#333;border:1px solid #444;}
 .sftopbar {background:#3b3c3e;}
 .sfurlbar {background:#555;}
 .sfurlbar .sfurl p {color: #fff;}
-.sfpage {background-color: #222;transition:0.2s all ease;}
+.sfpage {background-color: #222;transition:background-color 0.2s ease;}
 #facfi aside {background: #191919;}
 #facfi aside nav > svg, .clr #facfi aside nav > svg, .clr #facfi aside nav a.active svg, #facfi aside nav a.active svg {fill:#089fff;}
 #facfi aside nav > svg {fill:#089fff;stroke:#089fff;}
@@ -147,11 +145,11 @@ body > main > section {background:#333;border:1px solid #444;}
 
 #contact p {background:#444;border:1px solid #555;}
 #contact a {color:#ddd;}
-#contact a:hover {color:#eee;}
+@media (hover: hover) {#contact a:hover {color:#eee;}}
 #contact .chat button {background:#242424;color:#eee;border:1px solid #555;}
 @media (hover: hover) {#contact .chat button:hover {background: #9c9c9c;border:1px solid #333;color:#222;}}
 #contact form textarea{border-color:#414141;}
-#contact form textarea:hover {outline: 4px solid #444;border:1px solid #aaa;}
+@media (hover: hover) {#contact form textarea:hover {outline: 4px solid #444;border:1px solid #aaa;}}
 #contact form textarea:focus {outline: 4px solid #555;border:1px solid #ddd;}
 #contact form textarea {color:#eee;outline:0 solid #333;border:1px solid #808080;}
 #contact .answer p{color:#eee;background:#000;border:1px solid #292929;}

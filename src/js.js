@@ -1,5 +1,6 @@
 /* eslint-disable no-empty */
-const scrollBehavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
 
 // Demo mockups are pictures for assistive tech (role="img" / aria-hidden):
 // keep their buttons, links and inputs out of the keyboard tab order.
@@ -11,16 +12,19 @@ document.querySelectorAll('main [role="img"], main [aria-hidden="true"]').forEac
 // THE EYE
 const theEye = document.querySelector('#theeye');
 const pupil = document.querySelector('.pupil');
+const eyeBox = document.querySelector('#theeye .eye');
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+// x and y are 0-100: how far across the eye the pupil sits. Only transform is
+// written (the pupil rests at left/top 50% in CSS), so following the cursor
+// never triggers layout.
 function updatePupilPosition(x, y) {
-  const xPercentage = `${x}%`;
-  const yPercentage = `${y}%`;
-  pupil.style.left = xPercentage;
-  pupil.style.top = yPercentage;
-  pupil.style.transform = `translate(-${xPercentage}, -${yPercentage})`;
+  const dx = ((x - 50) / 100) * (eyeBox.offsetWidth - pupil.offsetWidth);
+  const dy = ((y - 50) / 100) * (eyeBox.offsetHeight - pupil.offsetHeight);
+  pupil.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
 }
 
-if (!isSafari) {
+// With reduced motion on, the eye just looks straight ahead
+if (!isSafari && !prefersReducedMotion) {
   let insideEye = false;
   let lastEvent = null;
   let frame = 0;
@@ -126,7 +130,7 @@ function approveFunding() {
   famobCards.classList.remove('active');
   unfundedDiv.classList.add('funded');
   animateNumber();
-  meterFinancing.style.width = '47%';
+  meterFinancing.style.transform = 'scaleX(0.47)';
   faApp.classList.add('dyactive');
   faSuccessMessage.classList.add('fashow');
 }
@@ -164,7 +168,7 @@ function undoFund() {
   availableFinancingElement.textContent = `€ 171.224,00`;
   totalProcessing.textContent = '€ 34.598,00';
   totalUnfunded.textContent = '€ 158.885,30';
-  meterFinancing.style.width = '70%';
+  meterFinancing.style.transform = 'scaleX(0.7)';
   faApp.classList.remove('dyactive');
   faSuccessMessage.classList.remove('fashow');
 }
@@ -242,20 +246,11 @@ tecaSect.addEventListener('mouseleave', () => {
 // CFF
 const cffSection = document.querySelector('#cff');
 
-const pathC = cffSection.querySelector('.cff-c');
-const lengthC = pathC.getTotalLength();
-pathC.style.strokeDasharray = `${lengthC} ${lengthC}`;
-pathC.style.strokeDashoffset = lengthC;
-
-const pathFOne = cffSection.querySelector('.cff-f-one');
-const lengthFOne = pathFOne.getTotalLength();
-pathFOne.style.strokeDasharray = `${lengthFOne} ${lengthFOne}`;
-pathFOne.style.strokeDashoffset = lengthFOne;
-
-const pathFTwo = cffSection.querySelector('.cff-f-two');
-const lengthFTwo = pathFTwo.getTotalLength();
-pathFTwo.style.strokeDasharray = `${lengthFTwo} ${lengthFTwo}`;
-pathFTwo.style.strokeDashoffset = lengthFTwo;
+// Each stroke's length goes into --len; css.css draws and un-draws from there
+['.cff-c', '.cff-f-one', '.cff-f-two'].forEach((selector) => {
+  const path = cffSection.querySelector(selector);
+  path.style.setProperty('--len', path.getTotalLength());
+});
 
 cffSection.addEventListener('click', () => {
   cffSection.classList.toggle('cff-anim-active');
@@ -354,8 +349,10 @@ function updateTotals() {
 
   if (selectedRowCount > 0 || faSelectAllCheckbox.checked) {
     actBtnRow.style.display = 'block';
+    actBtnRow.classList.add('is-shown');
   } else {
     actBtnRow.style.display = 'none';
+    actBtnRow.classList.remove('is-shown');
     totalAmount = 0;
   }
 }
