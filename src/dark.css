@@ -67,8 +67,8 @@ body > main > section {background:#333;border:1px solid #444;}
 
 #vlak {background-color:#121212;transition:background-color 0.5s ease 0.3s, border-color 0.5s ease 0.3s;}
 #vlak:hover{border-color:#121212;transition:background-color 0.5s ease, border-color 0.5s ease;}
-#vlak > div {filter:invert(0.85);transition: 0.5s filter ease 0.15s, 0.5s height ease 0.3s, 0.5s width ease 0.3s, 0.5s transform ease 0.3s;}
-#vlak:hover > div {filter:invert(0);transition: 0.5s filter ease 0.2s, height ease 0.5s, width ease 0.5s, transform ease 0.5s;}
+#vlak > div {filter:invert(0.85);transition: 0.5s filter ease 0.15s, 0.5s transform ease 0.3s;}
+#vlak:hover > div {filter:invert(0);transition: 0.5s filter ease 0.2s, transform ease 0.5s;}
 
 #f-desys:before, #f-desys:after {background:#333;box-shadow: 0px 0px 10px 20px #333;transition:background-color 0.3s ease, box-shadow 0.3s ease;}
 #f-desys:hover:before, #f-desys:hover:after, .clr #f-desys:before, .clr #f-desys:after {background:#222;box-shadow: 0px 0px 10px 20px #222;}

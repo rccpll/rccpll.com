@@ -21,6 +21,10 @@
     });
     const meta = document.querySelector('meta[name=color-scheme]');
     if (meta) meta.content = dark ? 'dark' : 'light';
+    // Status bar colour follows the chosen theme, not just the OS (values: html background in css.css / dark.css)
+    document.querySelectorAll('meta[name=theme-color]').forEach((m) => {
+      m.content = dark ? '#222' : '#fefefe';
+    });
     const button = document.querySelector('#darkBtn');
     if (button) button.setAttribute('aria-pressed', String(dark));
   }

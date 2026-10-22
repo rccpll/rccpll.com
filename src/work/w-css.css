@@ -36,6 +36,12 @@ body, html, input, textarea {font-family: ui-sans-serif,system-ui,-apple-system,
 /* theme.js sets this for the frame in which dark mode flips, so the whole page switches at once instead of cross-fading */
 html[data-theme-switching] *, html[data-theme-switching] *::before, html[data-theme-switching] *::after {transition:none !important;}
 
+/* Touch baseline: no grey tap flash, no double-tap delay, no font inflation in landscape, control labels not selectable */
+html {-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;}
+button, a, input, textarea {touch-action:manipulation;}
+button {user-select:none;-webkit-user-select:none;}
+h1, h2 {text-wrap:balance;}
+
 body > nav {position: absolute;top:0;left:0;right:0;width: var(--full-width);margin:2rem auto;}
 
 nav a.rccpll {border-radius:1rem;color:#000;background:transparent;position:relative;width:fit-content;text-decoration:none;padding:4px 8px 4px;font-size:0.8rem;line-height:1;display:flex;align-items:center;}
@@ -162,7 +168,7 @@ figcaption {text-align:center;font-size:0.8rem;opacity:0.6;margin-top:1rem;}
 .fac-filters input::placeholder {color:var(--color-text-light);font-size:0.75rem;font-weight:600;}
 
 .fac-filters .filter-selection, .fac-filters .filter-selection > div {display:flex;}
-.fac-filters .filter-selection > div {width:0;opacity:0;transition:width var(--transition-normal), opacity var(--transition-normal);}
+.fac-filters .filter-selection > div {width:0;opacity:0;transition:opacity var(--transition-normal);}
 .fac-filters.row-act-fil .filter-selection > div {width:auto;opacity:1;}
 .fac-filters .filter-selection label {display:flex;width:fit-content;border-radius:0.25rem;width:0;overflow:hidden;padding:0;margin:0;align-items:center;box-shadow: 0px 0px 0px 1px var(--color-text-light), 0px 1px 2px 0px #9e9e9e;font-size:0.75rem;height:1.375rem;cursor:pointer;color:var(--color-text-dark);}
 .fac-filters.row-act-fil .filter-selection label {padding:0 0.5rem;width:auto;margin-left:0.5rem;}

@@ -23,6 +23,12 @@ body, html, input, textarea {font-family: ui-sans-serif,system-ui,-apple-system,
 }
 /* theme.js sets this for the frame in which dark mode flips, so the whole page switches at once instead of cross-fading */
 html[data-theme-switching] *, html[data-theme-switching] *::before, html[data-theme-switching] *::after {transition:none !important;}
+
+/* Touch baseline: no grey tap flash (controls get :active feedback instead), no double-tap delay, no font inflation in landscape, control labels not selectable */
+html {-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;}
+button, a, input, textarea {touch-action:manipulation;}
+button {user-select:none;-webkit-user-select:none;}
+h1, h2 {text-wrap:balance;}
 body > header, body > main {display:grid;grid-template: repeat(2, auto) / 1fr 1fr;max-width:var(--full-width);margin:6.9rem auto;grid-gap: var(--gap);}
 
 header > nav {grid-column-start:1;}
@@ -47,7 +53,8 @@ main .horizontalrect {height:var(--quarter-width);width:var(--half-width);}
 /*				STATE BUTTONS
 */
 #stateBtns {position:absolute;display:flex;flex-direction:column;right:-1.5rem;top:-1rem;padding-right:0.5rem;}
-#stateBtns button {background:transparent;border:none;position:relative;height:1.5rem;width:1.5rem;font-size:0.8rem;overflow:hidden;border-radius:1rem;cursor:pointer;margin-bottom:0.5rem;}
+#stateBtns button {background:transparent;border:none;position:relative;height:1.5rem;width:1.5rem;font-size:0.8rem;overflow:hidden;border-radius:1rem;cursor:pointer;margin-bottom:0.5rem;transition:transform 100ms var(--ease-out);}
+#stateBtns button:active {transform:scale(0.92);}
 #stateBtns button:before{content:'';position:absolute;width:100%;height:100%;box-shadow:inset 0 0 0 0.5px #dedee3;border-radius:1rem;left:0;top:0;transition:box-shadow var(--dur-hover) ease, background-color var(--dur-hover) ease;}
 #stateBtns button:hover:before {background:#eee;box-shadow:inset 0 0 0 0.5px #eee;}
 
@@ -657,7 +664,7 @@ svg.m-top .firstmsecret {opacity:1}
 .fac-filters input::placeholder {color:#AEB9C7;font-size:0.75rem;font-weight:600;}
 
 .fac-filters .filter-selection, .fac-filters .filter-selection > div {display:flex;}
-.fac-filters .filter-selection > div {width:0;opacity:0;transition:width 0.3s ease, opacity 0.3s ease;}
+.fac-filters .filter-selection > div {width:0;opacity:0;transition:opacity 0.3s ease;}
 .fac-filters.row-act-fil .filter-selection > div {width:auto;opacity:1;}
 .fac-filters .filter-selection label {display:flex;width:fit-content;border-radius:0.25rem;width:0;overflow:hidden;padding:0;margin:0;align-items:center;box-shadow: 0px 0px 0px 1px #aeb9c7, 0px 1px 2px 0px #9e9e9e;font-size:0.75rem;height:1.375rem;cursor:pointer;color:#353540;}
 .fac-filters.row-act-fil .filter-selection label {padding:0 0.5rem;width:auto;margin-left:0.5rem;}
@@ -768,14 +775,16 @@ svg.m-top .firstmsecret {opacity:1}
 #contact a {color:#515151;transition:color var(--dur-hover) ease;}
 @media (hover: hover) {#contact a:hover {color:#000;}}
 #contact .handleError p:first-child {background:rgb(255 0 45 / 17%);}
-#contact .chat button {background:#e0e0e0;width:fit-content;padding:0.4rem 0.9rem;border-radius:1rem;margin:0.3rem 0 0 0;border:1px solid #e0e0e0;color:#000;box-shadow:none;font-size:1rem;cursor:pointer;transition:background-color var(--dur-hover) ease, border-color var(--dur-hover) ease, color var(--dur-hover) ease;}
+#contact .chat button {background:#e0e0e0;width:fit-content;padding:0.4rem 0.9rem;border-radius:1rem;margin:0.3rem 0 0 0;border:1px solid #e0e0e0;color:#000;box-shadow:none;font-size:1rem;cursor:pointer;transition:background-color var(--dur-hover) ease, border-color var(--dur-hover) ease, color var(--dur-hover) ease, transform 100ms var(--ease-out);}
+#contact .chat button:active {transform:scale(0.97);}
 #contact .chat .copy-btn {display:flex;align-items:center;justify-items:center;position:relative;cursor:copy;}
 #contact .chat .copy-btn span{position:absolute;right:-3.7rem;font-size:0.9rem;opacity:0;pointer-events:none;transition:opacity var(--dur-hover) ease;}
 #contact form {width:100%;display:flex;}
 #contact form textarea {padding:0.5rem 1rem;border-radius:1rem;border:1px solid #8a8a8a;box-sizing: border-box;font-size:1rem;margin-top:1rem;flex-grow:1;resize: none;height:auto;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;overflow-y:hidden;transition:border-color var(--dur-hover) ease, outline var(--dur-hover) ease;outline: 0 solid #f3f3f5;background:transparent;}
 @media (hover: hover) {#contact form textarea:hover {outline: 4px solid #f3f3f5;}}
 #contact form textarea:focus {outline:none;border:1px solid #000;box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;outline: 4px solid #f3f3f5;}
-#contact form button {padding:0.5rem 1rem;border-radius:1rem;border:1px solid #000; background:#000;color:#fff;box-sizing: border-box;font-size:1rem;margin-top:1rem;margin-left:0.5rem;opacity:1;transition:opacity var(--dur-hover) ease, background-color var(--dur-hover) ease, border-color var(--dur-hover) ease;max-height:2.3rem;align-self:flex-end;cursor:pointer;}
+#contact form button {padding:0.5rem 1rem;border-radius:1rem;border:1px solid #000; background:#000;color:#fff;box-sizing: border-box;font-size:1rem;margin-top:1rem;margin-left:0.5rem;opacity:1;transition:opacity var(--dur-hover) ease, background-color var(--dur-hover) ease, border-color var(--dur-hover) ease, transform 100ms var(--ease-out);max-height:2.3rem;align-self:flex-end;cursor:pointer;}
+#contact form button:active:not(:disabled) {transform:scale(0.97);}
 @media(hover: hover) {
 	#contact .chat button:hover {background:#c1baba;}
 	#contact form button:hover{opacity:0.6;}
@@ -898,7 +907,7 @@ svg.m-top .firstmsecret {opacity:1}
 }
 
 @media screen and (max-width:24rem) {
-	header > nav ul li, header h1, #contact p, #contact .chat .copy-btn, #contact form button, #contact form textarea {font-size:0.9rem;}
+	header > nav ul li, header h1, #contact p, #contact .chat .copy-btn, #contact form button {font-size:0.9rem;}
 	#famob .fagreet .greeth2, #famob .fagreet p {font-size:0.7rem;}
 	#famob label span {font-size:0.9rem;}
 	#famob label {font-size: 0.8rem;}
