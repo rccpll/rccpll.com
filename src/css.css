@@ -413,26 +413,24 @@ svg.m-top .firstmsecret {opacity:1}
 
 #cff.cff-anim-active svg.cff-anim .cff-c, #cff.cff-anim-active svg.cff-anim .cff-f-one, #cff.cff-anim-active svg.cff-anim .cff-f-two  {opacity:1;stroke-dashoffset:0;transition-delay:0.35s;}
 
-/* The rings grow by scaling the outer one (--g), never by animating padding. --grow is the hover size over the rest size per breakpoint. */
-#cff .cffCircles {--el-padding:3rem;--grow:1.667;--g:1;padding:var(--el-padding);border-radius:50%;transition: scale 0.3s cubic-bezier(0.39, 0.56, 0.33, 1.4), background-color 0.3s ease;position:relative;}
+/* The rings deliberately animate padding: each band thickens on its own as the cursor moves inward, which a transform on one ring cannot reproduce. Four empty boxes keep this cheap. */
+#cff .cffCircles {--el-padding:3rem;padding:var(--el-padding);border-radius:50%;transition: transform 0.3s cubic-bezier(0, 0.3, 0.53, 0.62) 0.4s, background-color 0.3s ease, padding 0.3s cubic-bezier(0.39, 0.56, 0.33, 1.4);position:relative;}
 #cff .cffCircles:before{content:'';position:absolute;width:100%;height:100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 16px;border-radius:50%;left:0;top:0;transition:box-shadow 0.3s ease, opacity 0.3s ease;}
-#cff > div > .cffCircles {background-color:#C1BABA;translate: calc(-50% * var(--g)) calc(-50% * var(--g));scale: var(--g);transition: translate 0.3s cubic-bezier(0.39, 0.56, 0.33, 1.4), scale 0.3s cubic-bezier(0.39, 0.56, 0.33, 1.4), transform 0.3s cubic-bezier(0, 0.3, 0.53, 0.62) 0.4s, background-color 0.3s ease;z-index:100;}
+#cff > div > .cffCircles {background-color:#C1BABA;transform:translate(-50%,-50%);z-index:100;}
 #cff > div  > .cffCircles > .cffCircles {background-color:#cac4c4;}
 #cff > div  > .cffCircles > .cffCircles > .cffCircles {background-color:#d3cfcf;}
 #cff > div  > .cffCircles > .cffCircles > .cffCircles > .cffCircles {background-color:#dddada;padding:calc(var(--el-padding) * 1.2);}
-#cff:hover > div > .cffCircles, .clr #cff > div > .cffCircles {--g:var(--grow);}
+#cff:hover .cffCircles, .clr #cff .cffCircles {--el-padding:5rem;transition: transform 0.3s cubic-bezier(0, 0.3, 0.53, 0.62) 0.3s, background-color 0.3s ease, padding 0.3s cubic-bezier(0.39, 0.56, 0.33, 1.4);}
 #cff .cffCircles:hover:before{box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 32px}
 #cff:hover > div  > .cffCircles, .clr #cff > div  > .cffCircles {background-color:#57575B;}
 #cff:hover > div  > .cffCircles > .cffCircles, .clr #cff > div  > .cffCircles > .cffCircles {background-color:#CC2E2D;}
 #cff:hover > div  > .cffCircles > .cffCircles > .cffCircles, .clr #cff > div  > .cffCircles > .cffCircles > .cffCircles {background-color:#EA4B43;}
 #cff:hover > div  > .cffCircles > .cffCircles > .cffCircles > .cffCircles, .clr #cff > div  > .cffCircles > .cffCircles > .cffCircles > .cffCircles {background-color:#FF5F52;}
 
-/* Only the innermost ring under the cursor pops */
-#cff > div > .cffCircles:hover:not(:has(.cffCircles:hover)) {scale: calc(var(--g) * 1.2);}
-#cff > div > .cffCircles .cffCircles:hover:not(:has(.cffCircles:hover)) {scale: 1.2;}
-#cff > div > .cffCircles > .cffCircles > .cffCircles > .cffCircles:hover {scale: 1.4;}
+#cff > div  > .cffCircles:hover, #cff > div  > .cffCircles > .cffCircles:hover, #cff > div  > .cffCircles > .cffCircles > .cffCircles:hover {padding:calc(var(--el-padding) * 1.2);}
+#cff > div  > .cffCircles > .cffCircles > .cffCircles > .cffCircles:hover {padding:calc(var(--el-padding) * 1.4);}
 
-#cff.cff-anim-active > div  > .cffCircles, #cff.cff-anim-active:hover > div  > .cffCircles {transform:translate(-38%,-38%);transition-delay:0s;}
+#cff.cff-anim-active > div  > .cffCircles, #cff.cff-anim-active:hover > div  > .cffCircles {transform:translate(-88%,-88%);transition-delay:0s, 0s, 0s;}
 #cff.cff-anim-active svg {opacity:1;}
 
 
@@ -844,7 +842,7 @@ svg.m-top .firstmsecret {opacity:1}
 	#famob .app {border-radius:3rem;}
 	#facfi {height:30rem;grid-area: 3 / 1 / span 1 / span 2;}
 	#cff .cffCircles {--el-padding: 6rem;}
-	#cff .cffCircles {--grow:1.167;}
+	#cff:hover div {--el-padding: 7rem;}
 	#teca {grid-area: 4 / 2 / span 2 / span 1;}
 	#vlak {grid-area: 7 / 1 / span 1 / span 1;}
 	#f-desys {grid-area: 6 / 1 / span 1 / span 2;}
@@ -865,7 +863,7 @@ svg.m-top .firstmsecret {opacity:1}
 	body > header {gap:0.5rem;}
 	#famob > div {width:60%;}
 	#cff .cffCircles {--el-padding: 5rem;}
-	#cff .cffCircles {--grow:1.2;}
+	#cff:hover div {--el-padding: 6rem;}
 	#f-desys .buttons .marque {gap:1rem;}
 }
 
@@ -886,7 +884,7 @@ svg.m-top .firstmsecret {opacity:1}
 	#colors {--width: 7rem;}
 	#cff svg {width: 6rem;}
 	#cff .cffCircles {--el-padding: 2.6rem;}
-	#cff .cffCircles {--grow:1.385;}
+	#cff:hover .cffCircles {--el-padding: 3.6rem;}
 	#facfi .actBtnRow p {font-size: 0.8rem;}
 	#teca {height:21rem;padding:1rem;}
 	#teca h1 {font-size:2.2rem;width:80%;}
