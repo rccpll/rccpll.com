@@ -406,7 +406,10 @@ function addAnswer(before, text) {
   before.before(bubble);
 }
 
-sendButton.addEventListener('click', (e) => {
+// Submit handler (not a click handler) so Enter/Space on the button and any
+// other submit path all land here instead of GET-reloading the page.
+const chatForm = document.querySelector('#contact form');
+chatForm.addEventListener('submit', (e) => {
   e.preventDefault();
   prompt.style.height = 'auto';
   const rawMessage = prompt.value;
@@ -439,6 +442,8 @@ function sendMessage() {
   prompt.disabled = true;
   prompt.value = '';
   sendButton.disabled = true;
+  sendButton.textContent = 'Sending…';
+  chatStatus.textContent = 'Sending…';
   handleError.classList.add('hide');
   handleSuccess.classList.add('hide');
 
@@ -451,6 +456,7 @@ function sendMessage() {
   })
     .then((response) => response.json())
     .then((data) => {
+      sendButton.textContent = 'Send';
       if (data.success) {
         // Message sent successfully
         handleSuccess.classList.remove('hide');
@@ -463,8 +469,9 @@ function sendMessage() {
         prompt.scrollIntoView({ behavior: scrollBehavior });
       }
     })
-    .catch((error) => {
-      // Catch any exceptions that may occur
+    .catch(() => {
+      // Network failure or non-JSON response
+      sendButton.textContent = 'Send';
       showChatError();
       prompt.scrollIntoView({ behavior: scrollBehavior });
     });
@@ -494,15 +501,24 @@ function sendAnother() {
 
 function copyEmail(event) {
   const email = 'hi@rccpll.com';
-  navigator.clipboard.writeText(email);
-  const copyButton = event.currentTarget;
-  const copyMessage = copyButton.querySelector('span');
-  copyMessage.textContent = 'Copied!';
-  copyMessage.style.opacity = '0.8';
-  setTimeout(() => {
-    copyMessage.style.opacity = '0';
-    copyMessage.textContent = '';
-  }, 2000);
+  const copyMessage = event.currentTarget.querySelector('span');
+  const show = (text) => {
+    copyMessage.textContent = text;
+    copyMessage.style.opacity = '0.8';
+    setTimeout(() => {
+      copyMessage.style.opacity = '0';
+      copyMessage.textContent = '';
+    }, 2000);
+  };
+  // Clipboard access can be missing (insecure context) or denied: say so instead of claiming success
+  if (!navigator.clipboard) {
+    show('Copy failed');
+    return;
+  }
+  navigator.clipboard
+    .writeText(email)
+    .then(() => show('Copied!'))
+    .catch(() => show('Copy failed'));
 }
 
 const copyButtons = document.querySelectorAll('.copy-btn');
