@@ -50,8 +50,10 @@ body > header, body > main {display:grid;grid-template: repeat(2, auto) / 1fr 1f
 header > nav {grid-column-start:1;}
 header > nav ul {margin:0;padding:0;}
 header > nav ul li {font-size:1.1rem;list-style-type:none;}
-header > nav a {color:var(--text-muted);text-decoration-color:#C1BABA;text-decoration-thickness:2px;text-underline-position:from-font;transition:color var(--dur-hover) ease;}
+header > nav a {position:relative;color:var(--text-muted);text-decoration-color:#C1BABA;text-decoration-thickness:2px;text-underline-position:from-font;transition:color var(--dur-hover) ease;}
 @media (hover: hover) {header > nav a:hover {color:var(--text);}}
+/* ~20px link, 44px+ hit area: grows down into the margin above main, the h1 link sits just above */
+header > nav a::after {content:'';position:absolute;inset:-0.7rem -0.5rem -1rem;}
 
 header h1 {font-size:1.1rem;font-weight:normal;margin:0;}
 header h1 a {text-decoration:none;color:inherit;}
@@ -80,7 +82,7 @@ main .horizontalrect {height:var(--quarter-width);width:var(--half-width);}
 #stateBtns #clrBtn {--width: 0.75rem;--ratio: 1;}
 #stateBtns #clrBtn.clr{--shift:0.125;}
 
-#stateBtns #clrBtn span {width:calc((var(--width)*var(--ratio)/3)*2);height:calc((var(--width)*var(--ratio)/3)*2);border-radius:50%;position:absolute;inset:0;margin:auto;transform:translate(calc(var(--size) * -0.1), 0);transition: background-color 0.3s cubic-bezier(0.25, 1, 0.33, 1), border-color 0.3s cubic-bezier(0.25, 1, 0.33, 1), opacity 0.3s cubic-bezier(0.25, 1, 0.33, 1), transform 0.3s cubic-bezier(0.25, 1, 0.33, 1);background:#a89f9f;border:1px solid #a89f9f;box-sizing:border-box;}
+#stateBtns #clrBtn span {width:calc((var(--width)*var(--ratio)/3)*2);height:calc((var(--width)*var(--ratio)/3)*2);border-radius:50%;position:absolute;inset:0;margin:auto;transform:translate(calc(var(--size) * -0.1), 0);transition: background-color var(--dur-hover) ease, border-color var(--dur-hover) ease, opacity 0.3s cubic-bezier(0.25, 1, 0.33, 1), transform 0.3s cubic-bezier(0.25, 1, 0.33, 1);background:#a89f9f;border:1px solid #a89f9f;box-sizing:border-box;}
 #stateBtns #clrBtn span:first-child, #stateBtns #clrBtn span:last-child,#stateBtns #clrBtn:hover span:first-child, #stateBtns #clrBtn:hover span:last-child{transform:translate(calc(var(--size) * 0.1), 0);background:#fff;}
 #stateBtns #clrBtn:hover span {background:#000;border-color:#000;}
 
@@ -89,7 +91,7 @@ main .horizontalrect {height:var(--quarter-width);width:var(--half-width);}
 #stateBtns #clrBtn.clr span:last-child {background:#FF0000;border-color:#FF0000;/*red*/transform:translate(calc(var(--size) * -1 * var(--shift)), calc(var(--size) * var(--shift)));}
 #stateBtns #clrBtn.clr:hover span {opacity:1;filter: grayscale(0);}
 
-#stateBtns #darkBtn span {width:0.5rem;height:0.5rem;border-radius:50%;position:absolute;margin:auto;transition: background-color 0.3s cubic-bezier(0.25, 1, 0.33, 1);top:0%;right:0%;left:0%;bottom:0%;box-sizing:border-box;background:#a89f9f;}
+#stateBtns #darkBtn span {width:0.5rem;height:0.5rem;border-radius:50%;position:absolute;margin:auto;transition: background-color var(--dur-hover) ease;top:0%;right:0%;left:0%;bottom:0%;box-sizing:border-box;background:#a89f9f;}
 #stateBtns #darkBtn:hover span{background:#000;}
 #stateBtns #darkBtn span:before {content:'';position:absolute;top:-0.25rem;left:-0.25rem;width:0.25rem;height:0.25rem;border-radius:50%;background:#fff;transition: opacity 0.3s ease, transform 0.3s ease;}
 
@@ -98,7 +100,7 @@ main .horizontalrect {height:var(--quarter-width);width:var(--half-width);}
 #sunDots{position: absolute;width:0.5rem;height:0.5rem;top:0%;right:0%;left:0%;bottom:0%;margin:auto;}
 
 #sunDots svg {position:absolute;left:0;right:0;bottom:0;top:0;width:2px;height:2px;opacity:1;margin:auto;transition: transform 400ms ease, opacity 200ms ease;}
-#sunDots svg circle {fill:#a89f9f;transition: fill 400ms ease;}
+#sunDots svg circle {fill:#a89f9f;transition: fill var(--dur-hover) ease;}
 #darkBtn:hover #sunDots svg circle {fill:#000;}
 #sunDots svg:first-child {transform: translate(0, -6px);}
 #sunDots svg:nth-child(2) {transform: translate(4.5px, -4.5px);}
@@ -204,7 +206,7 @@ section:hover .work-title, section:focus-within .work-title, .work-title:focus-v
 #famob:hover #financing-limit-meter div, .clr #famob #financing-limit-meter div {filter:grayscale(0);opacity:1;}
 
 .fabuttons {display:grid;grid-template:1fr / 1fr 1fr;gap:0.8rem;margin-top:0.8rem;}
-.facards button, .fabuttons button{padding:0.5rem;background: linear-gradient(180deg, rgba(12, 198, 255, 0.57) 0%, rgba(2, 107, 255, 0) 161.29%), #026BFF;box-shadow: 0px 1px 1px rgba(0, 72, 172, 0.2), inset 0px -0.4px 0.8px rgba(255, 255, 255, 0.32), inset 1px -1px 0px #005DDE;border-radius:0.25rem;border:0;font-weight: 600;font-size:0.75rem;letter-spacing: 0.2px;color: #FFFFFF;text-shadow: 0px 0.3px 0.5px rgba(0, 0, 0, 0.5), 0px 0px 3px rgba(0, 0, 0, 0.25);cursor:arrow;opacity:0.4;filter:grayscale(1);transition:opacity 0.3s ease, filter 0.3s ease;overflow:visible;width:fit-content;z-index:100;position:relative;}
+.facards button, .fabuttons button{padding:0.5rem;background: linear-gradient(180deg, rgba(12, 198, 255, 0.57) 0%, rgba(2, 107, 255, 0) 161.29%), #026BFF;box-shadow: 0px 1px 1px rgba(0, 72, 172, 0.2), inset 0px -0.4px 0.8px rgba(255, 255, 255, 0.32), inset 1px -1px 0px #005DDE;border-radius:0.25rem;border:0;font-weight: 600;font-size:0.75rem;letter-spacing: 0.2px;color: #FFFFFF;text-shadow: 0px 0.3px 0.5px rgba(0, 0, 0, 0.5), 0px 0px 3px rgba(0, 0, 0, 0.25);cursor:default;opacity:0.4;filter:grayscale(1);transition:opacity 0.3s ease, filter 0.3s ease;overflow:visible;width:fit-content;z-index:100;position:relative;}
 #famob:hover .facards button,  #famob:hover .fabuttons button {background:linear-gradient(180deg, rgba(12, 198, 255, 0.57) 0%, rgba(2, 107, 255, 0) 161.29%), #026BFF;}
 #famob:hover .facards button, #famob:hover .fabuttons button, .clr #famob .facards button, .clr #famob .fabuttons button {opacity:1;filter:grayscale(0);}
 #famob #fundInvoice button:hover{outline:4px solid rgba(2, 107, 255, 0.2);color:#F5F6FA;box-shadow:inset 0px -1px 0px rgba(0, 93, 222, 0.6), 0px 2px 1px rgba(0, 72, 172, 0.05), 0px -2px 1px rgba(0, 72, 172, 0.05), inset 0px -0.4px 0.8px rgba(255, 255, 255, 0.32);background:linear-gradient(180deg, rgba(12, 240, 255, 0.66) 0%, rgba(2, 107, 255, 0) 161.29%), #026BFF;}
@@ -241,7 +243,7 @@ section:hover .work-title, section:focus-within .work-title, .work-title:focus-v
 #famob .famob-card.faunfunded {margin-top:-3rem;z-index:100;box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;}
 #famob:hover .famob-card.faunfunded header mark, .clr #famob .famob-card.faunfunded header mark {background:#C8DDFB;}
 #famob .famob-card.faunfunded .famob-invoice {grid-template:1fr/auto 3.3rem;}
-#famob .famob-card.faunfunded #fundInvoice:before {content:'';position:absolute;top:-8px;bottom:0px;left:-8px;right:-8px;background:#E1E5EA;z-index:50;opacity:0;transition:opacity 0.3s ease;}
+#famob .famob-card.faunfunded #fundInvoice:before {content:'';position:absolute;top:-8px;bottom:0px;left:-8px;right:-8px;background:#E1E5EA;z-index:50;opacity:0;transition:opacity var(--dur-hover) ease;}
 #famob .famob-card.faunfunded #fundInvoice:hover:before{opacity:0.8;}
 #famob .famob-card.faunfunded .famob-invoice div {display:grid;grid-template: 1fr 1fr/1fr 1fr;z-index:100;}
 #famob .famob-card.faunfunded .famob-invoice button {justify-self:end;}
@@ -583,7 +585,7 @@ svg.m-top .firstmsecret {opacity:1}
 #f-desys .tabs__track {display:grid;grid-template-columns:1fr 1fr 1fr;width:300%;transition:translate 250ms ease-in-out, color 0.3s ease;}
 #f-desys .tabs__track label, #f-desys:hover .tabs__track label {color:#fff;}
 
-#f-desys label {font-size:0.75rem;font-weight:500;text-align:center;padding:.25rem .5rem;cursor:pointer;transition:background 0.3s ease, color 0.3s ease;border-radius:4rem;color:#c1baba;}
+#f-desys label {font-size:0.75rem;font-weight:500;text-align:center;padding:.25rem .5rem;cursor:pointer;transition:background var(--dur-hover) ease, color 0.3s ease;border-radius:4rem;color:#c1baba;}
 #f-desys:hover label {color:inherit;}
 #f-desys label:hover {background:#fff;}
 #f-desys input:nth-of-type(2):checked ~ .tabs__indicator {translate: 100% 0;}
@@ -615,7 +617,7 @@ svg.m-top .firstmsecret {opacity:1}
 #facfi aside nav {display:flex;flex-direction:column;margin:0;}
 #facfi aside nav > svg {margin-bottom:1.2rem;padding-left:0.5rem;fill:#c1baba;stroke:#c1baba;}
 
-#facfi aside nav a {display:flex;align-items:center;padding:0.5rem 0.4rem;margin:0;border-radius:0.25rem;min-width:8rem;transition:color 0.3s ease, background-color 0.3s ease;color:#c1baba;}
+#facfi aside nav a {display:flex;align-items:center;padding:0.5rem 0.4rem;margin:0;border-radius:0.25rem;min-width:8rem;transition:color 0.3s ease, background-color var(--dur-hover) ease;color:#c1baba;}
 #facfi aside nav a:hover {background:#FAFAFA;}
 #facfi aside nav a.active {background:#D9E7FC;color:#c1baba;font-weight:600;}
 #facfi aside nav a svg {margin-right:0.5rem;fill:#c1baba;}
@@ -661,7 +663,7 @@ svg.m-top .firstmsecret {opacity:1}
 #facfi .table-status span {padding: 0.125rem 0.5rem; background:#E4E7EC;border-radius:2rem;}
 #facfi .table-issue span.date-red, #facfi .table-due span.date-red {color:#A92803;}
 
-#facfi .ckbx {position:relative;overflow:hidden;box-sizing:border-box;display:block;width:1rem;height:1rem;background:#fff;border:1px solid #AEB9C7;border-radius:0.25rem;box-shadow: 0px 2px 2px 0px rgba(174, 185, 199, 0.33) inset;cursor:pointer;transition:opacity 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;opacity:0.4}
+#facfi .ckbx {position:relative;overflow:hidden;box-sizing:border-box;display:block;width:1rem;height:1rem;background:#fff;border:1px solid #AEB9C7;border-radius:0.25rem;box-shadow: 0px 2px 2px 0px rgba(174, 185, 199, 0.33) inset;cursor:pointer;transition:opacity 0.3s ease, border-color var(--dur-hover) ease, background-color var(--dur-hover) ease, box-shadow var(--dur-hover) ease;opacity:0.4}
 #facfi:hover .ckbx, .clr #facfi .ckbx {opacity:1;}
 #facfi .ckbx:hover, .ckbx.hover {border-color:#026BFF;box-shadow: 0px 2px 2px 0px rgba(174, 185, 199, 0.33) inset, 0px 0px 0px 4px #D9E7FC;}
 #facfi .ckbx input{position:absolute;opacity:0;cursor:pointer;height:0;width:0;}
@@ -707,7 +709,7 @@ svg.m-top .firstmsecret {opacity:1}
 .fac-filters .current-filters div {display:flex;width:fit-content;background:#D9E7FC;border-radius:1rem;padding:0.125rem 0.5rem;align-items:center;margin-top:0.5rem;border:1px solid #D9E7FC;}
 .fac-filters .current-filters p {display:inline-block;font-size:0.75rem;color:#353540;padding:0;margin:0;}
 .fac-filters .current-filters p span {font-weight:600;}
-.fac-filters .current-filters svg {margin-left:0.5rem;width:0.55rem;height:auto;fill:#5c5c70;stroke:transparent;transition:fill 0.3s ease, opacity 0.3s ease;cursor:pointer;}
+.fac-filters .current-filters svg {margin-left:0.5rem;width:0.55rem;height:auto;fill:#5c5c70;stroke:transparent;transition:fill var(--dur-hover) ease, opacity 0.3s ease;cursor:pointer;}
 .fac-filters .current-filters svg:hover {fill:#026BFF; stroke:#026BFF;stroke-width:0.5;}
 
 .actBtnRow{margin-top:1rem;}
@@ -788,7 +790,7 @@ svg.m-top .firstmsecret {opacity:1}
 #contact .answer {align-self:flex-end;transform-origin:bottom right;animation:showUp var(--dur-enter) var(--ease-out);}
 #contact .answer p{color:#fff;background:#000;border:1px solid #000;white-space:pre-line;}
 @keyframes showUp {from {opacity:0;transform:translateY(6px) scale(0.97);} to {opacity:1;transform:none;}}
-#contact span {display:block;font-size:0.75rem;color:#767676;padding-left:1rem;line-height:1;position:relative;}
+#contact span {display:block;font-size:0.75rem;color:var(--text-muted);padding-left:1rem;line-height:1;position:relative;}
 #contact span.time {margin-top:0.25rem;}
 #contact span.chat-ric-name:before {content:'';position:absolute;width:6px;height:6px;border-radius:50%;background:#34c85a;left:3px;top:3px;}
 #contact p {background:var(--surface-2);width:fit-content;padding:0.4rem 0.9rem;border-radius:1rem;margin:0.3rem 0 0;border:1px solid var(--surface-2-edge);}
@@ -796,18 +798,18 @@ svg.m-top .firstmsecret {opacity:1}
 @media (hover: hover) {#contact a:hover {color:#000;}}
 #contact .handleError p:first-child {background:rgb(255 0 45 / 17%);}
 #contact .chat button {background:#e0e0e0;width:fit-content;padding:0.4rem 0.9rem;border-radius:1rem;margin:0.3rem 0 0 0;border:1px solid #e0e0e0;color:#000;box-shadow:none;font-size:1rem;cursor:pointer;transition:background-color var(--dur-hover) ease, border-color var(--dur-hover) ease, color var(--dur-hover) ease, transform 100ms var(--ease-out);}
-#contact .chat button:active {transform:scale(0.97);}
+#contact .chat button:active {transform:scale(0.96);}
 #contact .chat .copy-btn {display:flex;align-items:center;justify-items:center;position:relative;cursor:copy;}
 #contact .chat .copy-btn span{position:absolute;right:-3.7rem;font-size:0.9rem;opacity:0;pointer-events:none;transition:opacity var(--dur-hover) ease;}
 #contact form {width:100%;display:flex;}
-#contact form textarea {padding:0.5rem 1rem;border-radius:1rem;border:1px solid #8a8a8a;box-sizing: border-box;font-size:1rem;margin-top:1rem;flex-grow:1;resize: none;height:auto;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;overflow-y:hidden;transition:border-color var(--dur-hover) ease, outline var(--dur-hover) ease;outline: 0 solid #f3f3f5;background:transparent;}
+#contact form textarea {padding:0.5rem 1rem;border-radius:1rem;border:1px solid rgb(0 0 0 / 0.45);box-sizing: border-box;font-size:1rem;margin-top:1rem;flex-grow:1;resize: none;height:auto;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;overflow-y:hidden;transition:border-color var(--dur-hover) ease, outline var(--dur-hover) ease;outline: 0 solid #f3f3f5;background:transparent;}
 @media (hover: hover) {#contact form textarea:hover {outline: 4px solid #f3f3f5;}}
-#contact form textarea:focus {outline:none;border:1px solid #000;box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;outline: 4px solid #f3f3f5;}
-#contact form button {padding:0.5rem 1rem;border-radius:1rem;border:1px solid #000; background:#000;color:#fff;box-sizing: border-box;font-size:1rem;margin-top:1rem;margin-left:0.5rem;opacity:1;transition:opacity var(--dur-hover) ease, background-color var(--dur-hover) ease, border-color var(--dur-hover) ease, transform 100ms var(--ease-out);max-height:2.3rem;align-self:flex-end;cursor:pointer;}
-#contact form button:active:not(:disabled) {transform:scale(0.97);}
+#contact form textarea:focus {border:1px solid #000;box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;outline: 4px solid rgb(0 0 0 / 0.12);}
+#contact form button {--send-bg:#000;padding:0.5rem 1rem;border-radius:1rem;border:1px solid transparent;background:var(--send-bg);color:#fff;box-sizing: border-box;font-size:1rem;margin-top:1rem;margin-left:0.5rem;opacity:1;transition:opacity var(--dur-hover) ease, background-color var(--dur-hover) ease, border-color var(--dur-hover) ease, transform 100ms var(--ease-out);max-height:2.3rem;align-self:flex-end;cursor:pointer;}
+#contact form button:active:not(:disabled) {transform:scale(0.96);}
 @media(hover: hover) {
 	#contact .chat button:hover {background:#c1baba;}
-	#contact form button:hover{opacity:0.6;}
+	#contact form button:hover:not(:disabled) {background:color-mix(in oklch, var(--send-bg) 75%, white);}
 }
 #contact form textarea:disabled,
 #contact form textarea[disabled] {background:#f3f3f5;border-color:#f3f3f5;cursor:not-allowed;}
