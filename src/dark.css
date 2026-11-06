@@ -46,14 +46,37 @@
 #famob .famob-card, #famob .famob-card.faunfunded, #famob .famob-card.faprocessing:hover, #famob .facards.active .faprocessing, #famob .facards.active .faprocessing:hover {box-shadow:var(--ring);}
 #famob .fagreet img {outline-color:rgb(255 255 255 / 0.1);}
 #famob .famob-card header mark {background:#555;}
-#famob .famob-card .famob-invoice {border-bottom:var(--hairline) solid var(--hairline-color);}
-.clr #famob .famob-card .famob-invoice {border-bottom:var(--hairline) solid #E1E5EA;}
-.clr #famob .famob-card .famob-invoice:last-child, #famob .famob-card .famob-invoice:last-child {border-bottom: none;}
+#famob .famob-card .famob-invoice, #famob:hover .famob-card .famob-invoice, .clr #famob .famob-card .famob-invoice {border-bottom:var(--hairline) solid var(--hairline-color);}
+.clr #famob .famob-card .famob-invoice:last-child, #famob:hover .famob-card .famob-invoice:last-child, #famob .famob-card .famob-invoice:last-child {border-bottom: none;}
 .facards button, .fabuttons button {background: linear-gradient(180deg, rgb(248 248 248 / 57%) 0%, rgb(0 0 0 / 0%) 161.29%), #030a13;}
 .clr .facards button, .clr .fabuttons button {background:linear-gradient(180deg, rgba(12, 198, 255, 0.57) 0%, rgba(2, 107, 255, 0) 161.29%), #026BFF;}
 #famob .fasuccess {background-color: #111;}
 #famob .fasuccess.fashow button {background:#333;}
 #famob .famob-card.faprocessing .famob-invoice mark {background:#525252;}
+#famob .famob-card.faunfunded #fundInvoice:before {background:#444;}
+@keyframes fafade {
+	0% {background:#444;opacity:0;}
+	20%, 40% {background:#444;opacity:0.8;}
+	90%, 100% {background:#444;opacity:0;}
+}
+
+/* Hover / colour mode: the app stays a dark app, using the Factris dark palette from #facfi below */
+#famob:after {background:radial-gradient(231.15% 141.42% at 100% 0%, rgb(2 107 255 / 0.45) 0%, rgb(2 107 255 / 0.06) 100%), #191919;}
+#famob:hover .app, .clr #famob .app {background:#222;}
+#famob:hover nav #current-time, .clr #famob nav #current-time {color:#eee;}
+#famob:hover nav .ipn-icons svg, .clr #famob nav .ipn-icons svg {fill:#eee;}
+#famob:hover .fagreet .greeth2, #famob:hover .fagreet p, .clr #famob .fagreet .greeth2, .clr #famob .fagreet p {color:#eee;}
+#famob:hover .fagreet svg path, .clr #famob .fagreet svg path {fill:#bbb;}
+#famob:hover .fagreet svg .fa-notif, .clr #famob .fagreet svg .fa-notif {fill:#089fff;}
+#famob:hover label, .clr #famob label {color:#bbb;}
+#famob:hover label span strong, .clr #famob label span strong {color:#eee;}
+#famob:hover #financing-limit-meter, .clr #famob #financing-limit-meter {background:#333;box-shadow:0 0 0 1px #555;}
+#famob:hover .famob-card, .clr #famob .famob-card {background:#333;}
+#famob:hover .famob-card header, .clr #famob .famob-card header {color:#eee;}
+#famob:hover .famob-card header mark, .clr #famob .famob-card header mark {background:#89632a;color:#eee;}
+#famob:hover .famob-card.faunfunded header mark, .clr #famob .famob-card.faunfunded header mark {background:#28456c;}
+#famob:hover .famob-card .famob-invoice p, .clr #famob .famob-card .famob-invoice p {color:#eee;}
+#famob:hover .famob-card.faprocessing .famob-invoice mark, .clr #famob .famob-card.faprocessing .famob-invoice mark {background:#89632a;color:#eee;}
 
 #revire:before {background:#222;}
 #revire svg:last-child, .clr #revire svg:last-child {fill:#fff;}
