@@ -162,7 +162,7 @@
 #contact form textarea:focus {outline: 4px solid #555;border:1px solid #ddd;}
 #contact form textarea {color:#eee;outline:0 solid #333;border:1px solid #808080;}
 #contact .answer p{color:#eee;background:#000;border:1px solid #292929;}
-#contact form button {background:#0e0e0e;}
+#contact form button {--send-bg:#0e0e0e;}
 #contact form button:disabled, #contact form button[disabled]  {background:transparent;border-color:#555;color:#eee;opacity:0.6;}
 #contact form button {opacity:1;border-color:#777;}
 #contact form textarea:disabled, #contact form textarea[disabled] {background:transparent;border-color:#414141}
